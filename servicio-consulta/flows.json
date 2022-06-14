@@ -1,0 +1,166 @@
+[
+    {
+        "id": "6307206ff6aca97e",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/servidores-locales",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "3c6f1f329a2d47b9"
+            ]
+        ]
+    },
+    {
+        "id": "9fa618fe9da221c4",
+        "type": "mongodb4",
+        "z": "f6f2187d.f17ca8",
+        "clientNode": "412c2389580c0420",
+        "collection": "servidores_locales_con_ultimo_estado",
+        "operation": "find",
+        "output": "toArray",
+        "name": "recupera todos los servidores locales",
+        "x": 570,
+        "y": 80,
+        "wires": [
+            [
+                "272d19c2f704e304"
+            ]
+        ]
+    },
+    {
+        "id": "3c6f1f329a2d47b9",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "set query",
+        "func": "msg.payload = [{}]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "9fa618fe9da221c4"
+            ]
+        ]
+    },
+    {
+        "id": "272d19c2f704e304",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 790,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "13e9f42d8c8e9cd4",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/servidores-locales/:idServidorLocal/sensores",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 250,
+        "y": 140,
+        "wires": [
+            [
+                "c2bd8afc37680276"
+            ]
+        ]
+    },
+    {
+        "id": "c2bd8afc37680276",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "set query",
+        "func": "msg.payload = [[\n    {\n        $match: {\n            \"_id\": msg.req.params.idServidorLocal\n        }\n    }\n]]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 140,
+        "wires": [
+            [
+                "0d816dc6f214e510"
+            ]
+        ]
+    },
+    {
+        "id": "0d816dc6f214e510",
+        "type": "mongodb4",
+        "z": "f6f2187d.f17ca8",
+        "clientNode": "412c2389580c0420",
+        "collection": "sensores_por_servidor_local_con_ultimas_lecturas",
+        "operation": "aggregate",
+        "output": "toArray",
+        "name": "servidores_locales aggregate",
+        "x": 720,
+        "y": 140,
+        "wires": [
+            [
+                "674d2d3c13371a25"
+            ]
+        ]
+    },
+    {
+        "id": "674d2d3c13371a25",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "response",
+        "func": "if(msg.payload.length > 0)\n{\n    msg.payload = msg.payload[0];\n}else\n{\n    msg.payload = {\n        \"message\": \"El servidor especificado no existe\"\n    }\n    \n    msg.statusCode = 404\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 140,
+        "wires": [
+            [
+                "249f02b75edc8ce9"
+            ]
+        ]
+    },
+    {
+        "id": "249f02b75edc8ce9",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1050,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "412c2389580c0420",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "",
+        "port": "",
+        "dbName": "${MONGO_DB}",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": false,
+        "tlsCAFile": "",
+        "tlsInsecure": false,
+        "uri": "${MONGO_URL}",
+        "advanced": "",
+        "uriTabActive": "tab-uri-advanced"
+    }
+]

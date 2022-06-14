@@ -1,0 +1,61 @@
+version: "3.9"
+services:
+  servicio-broker:
+    image: broker-mqtt
+    networks: 
+      - localnet
+    ports:
+      - 9001:1880
+
+  servicio-almacenamiento:
+    image: servicio-almacenamiento
+    networks: 
+      - localnet
+    environment:
+      - BROKER_SERVICE=servicio-broker
+      - MONGO_URL=mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net
+      - MONGO_DB=servidor_central
+    ports:
+      - 9002:1880
+
+  servicio-consulta:
+    image: servicio-consulta
+    networks: 
+      - localnet
+    environment:
+      - MONGO_URL=mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net
+      - MONGO_DB=servidor_central
+      - TZ=Europe/Madrid
+    ports:
+      - 9003:1880
+
+  servidor-local-1:
+    image: servidor-local
+    networks: 
+      - localnet
+    environment:
+      - SERVER_ID=sl1
+      - BROKER_SERVICE=servicio-broker
+      - NUM_SENS_INCENDIO=1
+      - NUM_SENS_TEMPERATURA=1
+      - NUM_SENS_PRESENCIA=3
+      - TZ=Europe/Madrid
+    ports:
+      - 9004:1880
+  
+  servidor-local-2:
+    image: servidor-local
+    networks: 
+      - localnet
+    environment:
+      - SERVER_ID=sl2
+      - BROKER_SERVICE=servicio-broker
+      - NUM_SENS_INCENDIO=1
+      - NUM_SENS_TEMPERATURA=1
+      - NUM_SENS_PRESENCIA=2
+      - TZ=Europe/Madrid
+    ports:
+      - 9005:1880
+
+networks:
+  localnet:

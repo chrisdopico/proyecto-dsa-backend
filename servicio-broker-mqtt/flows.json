@@ -1,0 +1,69 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "76888d7baaf408cd",
+        "type": "aedes broker",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "mqtt_port": 1883,
+        "mqtt_ws_bind": "port",
+        "mqtt_ws_port": "",
+        "mqtt_ws_path": "",
+        "cert": "",
+        "key": "",
+        "certname": "",
+        "keyname": "",
+        "dburl": "",
+        "usetls": false,
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "b57c6bbb7caf693b"
+            ],
+            [
+                "2ce4eb323b27a44e"
+            ]
+        ]
+    },
+    {
+        "id": "b57c6bbb7caf693b",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "events",
+        "active": true,
+        "tosidebar": false,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2ce4eb323b27a44e",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "publish",
+        "active": true,
+        "tosidebar": false,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 120,
+        "wires": []
+    }
+]

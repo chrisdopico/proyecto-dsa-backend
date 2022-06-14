@@ -1,0 +1,13 @@
+{
+    "name": "node-red-project",
+    "description": "A Node-RED Project",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+    },
+    "dependencies": {
+        "node-red": "2.2.2",
+        "node-red-contrib-mongodb4": "~1.3.1"
+    }
+}
