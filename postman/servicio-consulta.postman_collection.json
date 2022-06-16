@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "6149686c-326c-4cfc-b1d2-f5079278e98c",
+		"name": "servicio-consulta",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/servidores-locales",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9003/servidores-locales",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
+					"path": [
+						"servidores-locales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/servidores-locales/{id}/sensores",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9003/servidores-locales/sl1/sensores",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
+					"path": [
+						"servidores-locales",
+						"sl1",
+						"sensores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": \"admin-0\",\r\n    \"contraseña\": \"admin-0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9003/token",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
+					"path": [
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/servidores-locales/{id}/interrumpir",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer dff2dd2d-6da8-46ee-b0d5-60363d946cab",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:9003/servidores-locales/sl1/interrumpir",
+					"host": [
+						"localhost"
+					],
+					"port": "9003",
+					"path": [
+						"servidores-locales",
+						"sl1",
+						"interrumpir"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
