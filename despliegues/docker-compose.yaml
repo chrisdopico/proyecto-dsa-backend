@@ -1,11 +1,11 @@
 version: "3.9"
 services:
-  servicio-broker:
-    image: broker-mqtt
-    networks: 
-      - localnet
-    ports:
-      - 9001:1880
+  #servicio-broker:
+  #  image: broker-mqtt
+  #  networks: 
+  #    - localnet
+  #  ports:
+  #    - 9001:1880
 
   servicio-almacenamiento:
     image: servicio-almacenamiento
@@ -35,7 +35,7 @@ services:
       - localnet
     environment:
       - SERVER_ID=sl1
-      - BROKER_SERVICE=servicio-broker
+      - BROKER_SERVICE=ws://redsensors-broker.eu-gb.cf.appdomain.cloud/broker
       - NUM_SENS_INCENDIO=1
       - NUM_SENS_TEMPERATURA=1
       - NUM_SENS_PRESENCIA=3
@@ -49,7 +49,7 @@ services:
       - localnet
     environment:
       - SERVER_ID=sl2
-      - BROKER_SERVICE=servicio-broker
+      - BROKER_SERVICE=ws://redsensors-broker.eu-gb.cf.appdomain.cloud/broker
       - NUM_SENS_INCENDIO=1
       - NUM_SENS_TEMPERATURA=1
       - NUM_SENS_PRESENCIA=2
