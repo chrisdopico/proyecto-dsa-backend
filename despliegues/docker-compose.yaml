@@ -7,6 +7,17 @@ services:
   #  ports:
   #    - 9001:1880
 
+    #servicio-consulta:
+  #  image: servicio-consulta
+  #  networks: 
+  #    - localnet
+  #  environment:
+  #    - MONGO_URL=mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net
+  #    - MONGO_DB=servidor_central
+  #    - TZ=Europe/Madrid
+  #  ports:
+  #   - 9003:1880
+
   servicio-almacenamiento:
     image: servicio-almacenamiento
     networks: 
@@ -17,17 +28,6 @@ services:
       - MONGO_DB=servidor_central
     ports:
       - 9002:1880
-
-  servicio-consulta:
-    image: servicio-consulta
-    networks: 
-      - localnet
-    environment:
-      - MONGO_URL=mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net
-      - MONGO_DB=servidor_central
-      - TZ=Europe/Madrid
-    ports:
-      - 9003:1880
 
   servidor-local-1:
     image: servidor-local

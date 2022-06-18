@@ -2,10 +2,53 @@
     {
         "id": "5c6c220009097d76",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Recursos",
         "disabled": false,
         "info": "",
         "env": []
+    },
+    {
+        "id": "412c2389580c0420",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "",
+        "port": "",
+        "dbName": "servidor_central",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": false,
+        "tlsCAFile": "",
+        "tlsInsecure": false,
+        "uri": "mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net",
+        "advanced": "",
+        "uriTabActive": "tab-uri-advanced"
+    },
+    {
+        "id": "d52403817db3438f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "ws://redsensors-broker.eu-gb.cf.appdomain.cloud/broker",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
     },
     {
         "id": "6307206ff6aca97e",
@@ -17,7 +60,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 140,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "3c6f1f329a2d47b9"
@@ -34,7 +77,7 @@
         "output": "toArray",
         "name": "recupera todos los servidores locales",
         "x": 550,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "272d19c2f704e304"
@@ -53,7 +96,7 @@
         "finalize": "",
         "libs": [],
         "x": 320,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "9fa618fe9da221c4"
@@ -68,7 +111,7 @@
         "statusCode": "",
         "headers": {},
         "x": 770,
-        "y": 60,
+        "y": 100,
         "wires": []
     },
     {
@@ -81,7 +124,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 230,
-        "y": 120,
+        "y": 200,
         "wires": [
             [
                 "c2bd8afc37680276"
@@ -100,7 +143,7 @@
         "finalize": "",
         "libs": [],
         "x": 500,
-        "y": 120,
+        "y": 200,
         "wires": [
             [
                 "0d816dc6f214e510"
@@ -117,7 +160,7 @@
         "output": "toArray",
         "name": "servidores_locales aggregate",
         "x": 700,
-        "y": 120,
+        "y": 200,
         "wires": [
             [
                 "674d2d3c13371a25"
@@ -136,7 +179,7 @@
         "finalize": "",
         "libs": [],
         "x": 900,
-        "y": 120,
+        "y": 200,
         "wires": [
             [
                 "249f02b75edc8ce9"
@@ -151,7 +194,7 @@
         "statusCode": "",
         "headers": {},
         "x": 1030,
-        "y": 120,
+        "y": 200,
         "wires": []
     },
     {
@@ -162,7 +205,7 @@
         "scope": null,
         "uncaught": false,
         "x": 100,
-        "y": 420,
+        "y": 500,
         "wires": [
             [
                 "2f0754f479c7d5d3"
@@ -181,7 +224,7 @@
         "finalize": "",
         "libs": [],
         "x": 260,
-        "y": 420,
+        "y": 500,
         "wires": [
             [
                 "e6d2c2b62123e651"
@@ -196,7 +239,7 @@
         "statusCode": "",
         "headers": {},
         "x": 410,
-        "y": 420,
+        "y": 500,
         "wires": []
     },
     {
@@ -209,7 +252,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 110,
-        "y": 320,
+        "y": 300,
         "wires": [
             [
                 "aa9e1ba29b5b4cab"
@@ -228,7 +271,7 @@
         "finalize": "",
         "libs": [],
         "x": 290,
-        "y": 320,
+        "y": 300,
         "wires": [
             [
                 "668f6646ff5b441e"
@@ -242,7 +285,7 @@
         "name": "",
         "algorithm": "SHA512",
         "x": 450,
-        "y": 320,
+        "y": 300,
         "wires": [
             [
                 "e846b61caf5b1f47"
@@ -261,7 +304,7 @@
         "finalize": "",
         "libs": [],
         "x": 570,
-        "y": 320,
+        "y": 300,
         "wires": [
             [
                 "3b73689b3abb72a5"
@@ -278,7 +321,7 @@
         "output": "toArray",
         "name": "",
         "x": 700,
-        "y": 320,
+        "y": 300,
         "wires": [
             [
                 "d8b009ae4294a62f"
@@ -292,8 +335,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1790,
-        "y": 320,
+        "x": 1670,
+        "y": 300,
         "wires": []
     },
     {
@@ -315,10 +358,10 @@
         "repair": false,
         "outputs": 2,
         "x": 850,
-        "y": 320,
+        "y": 300,
         "wires": [
             [
-                "c1761d5d04b0cf03"
+                "6bb7afe0411f4bdf"
             ],
             [
                 "884269f6a50c3475"
@@ -337,29 +380,10 @@
         "finalize": "",
         "libs": [],
         "x": 1000,
-        "y": 340,
+        "y": 320,
         "wires": [
             [
                 "9909a36164c767c1"
-            ]
-        ]
-    },
-    {
-        "id": "c1761d5d04b0cf03",
-        "type": "function",
-        "z": "5c6c220009097d76",
-        "name": "200 ok",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 990,
-        "y": 300,
-        "wires": [
-            [
-                "6bb7afe0411f4bdf"
             ]
         ]
     },
@@ -374,8 +398,8 @@
         "name": "generar token",
         "field": "payload",
         "fieldType": "msg",
-        "x": 1140,
-        "y": 300,
+        "x": 1020,
+        "y": 280,
         "wires": [
             [
                 "1de6c85290b87ab6"
@@ -391,8 +415,8 @@
         "operation": "insertOne",
         "output": "toArray",
         "name": "insertar token",
-        "x": 1480,
-        "y": 300,
+        "x": 1360,
+        "y": 280,
         "wires": [
             [
                 "34e58d45a8d7d39b"
@@ -410,8 +434,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1310,
-        "y": 300,
+        "x": 1190,
+        "y": 280,
         "wires": [
             [
                 "ae9282f3c9a4846a"
@@ -429,8 +453,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1640,
-        "y": 300,
+        "x": 1520,
+        "y": 280,
         "wires": [
             [
                 "8428ce578afdbe7e"
@@ -447,7 +471,7 @@
             "09e75c8f2e3aa6f0"
         ],
         "x": 1095,
-        "y": 340,
+        "y": 320,
         "wires": []
     },
     {
@@ -458,8 +482,8 @@
         "links": [
             "9909a36164c767c1"
         ],
-        "x": 1685,
-        "y": 340,
+        "x": 1565,
+        "y": 320,
         "wires": [
             [
                 "8428ce578afdbe7e"
@@ -476,7 +500,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 230,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
                 "c79a48f76e05df13"
@@ -502,7 +526,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1060,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
                 "792d7b311c3e80ab"
@@ -524,7 +548,7 @@
         "finalize": "",
         "libs": [],
         "x": 1240,
-        "y": 240,
+        "y": 460,
         "wires": [
             [
                 "241d36ccb3d62291"
@@ -541,7 +565,7 @@
             "46fdae49c2980eb2"
         ],
         "x": 1335,
-        "y": 240,
+        "y": 460,
         "wires": []
     },
     {
@@ -556,7 +580,7 @@
         "finalize": "",
         "libs": [],
         "x": 1230,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
                 "4d9661936b05eef3"
@@ -573,7 +597,7 @@
         "output": "toArray",
         "name": "busca token",
         "x": 1370,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
                 "767b31fec46a4fbb"
@@ -599,10 +623,11 @@
         "repair": false,
         "outputs": 2,
         "x": 1530,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
-                "9282269079566ce1"
+                "9282269079566ce1",
+                "076942bdc401e5d3"
             ],
             [
                 "1c97402c220fd9a6"
@@ -620,8 +645,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1680,
-        "y": 240,
+        "x": 1700,
+        "y": 460,
         "wires": [
             [
                 "4bac12b49f8d01d6"
@@ -637,8 +662,8 @@
         "links": [
             "46fdae49c2980eb2"
         ],
-        "x": 1775,
-        "y": 240,
+        "x": 1795,
+        "y": 460,
         "wires": []
     },
     {
@@ -652,8 +677,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1680,
-        "y": 180,
+        "x": 1700,
+        "y": 400,
         "wires": [
             [
                 "843cdc8f3fc3d9b8"
@@ -667,8 +692,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1930,
-        "y": 180,
+        "x": 2050,
+        "y": 400,
         "wires": []
     },
     {
@@ -681,8 +706,8 @@
             "241d36ccb3d62291",
             "186594fec6598ece"
         ],
-        "x": 1835,
-        "y": 240,
+        "x": 1965,
+        "y": 440,
         "wires": [
             [
                 "843cdc8f3fc3d9b8"
@@ -701,7 +726,7 @@
         "finalize": "",
         "libs": [],
         "x": 500,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
                 "f88b68d96b749ee5"
@@ -718,7 +743,7 @@
         "output": "toArray",
         "name": "busca servidor local",
         "x": 680,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
                 "a7aa64413c54c893"
@@ -737,7 +762,7 @@
         "finalize": "",
         "libs": [],
         "x": 1040,
-        "y": 240,
+        "y": 460,
         "wires": [
             [
                 "186594fec6598ece"
@@ -763,7 +788,7 @@
         "repair": false,
         "outputs": 2,
         "x": 870,
-        "y": 180,
+        "y": 400,
         "wires": [
             [
                 "8a6fa691e6406e1f"
@@ -783,24 +808,84 @@
             "46fdae49c2980eb2"
         ],
         "x": 1135,
-        "y": 240,
+        "y": 460,
         "wires": []
     },
     {
-        "id": "412c2389580c0420",
-        "type": "mongodb4-client",
-        "name": "",
-        "protocol": "mongodb",
-        "hostname": "",
-        "port": "",
-        "dbName": "${MONGO_DB}",
-        "authSource": "",
-        "authMechanism": "DEFAULT",
-        "tls": false,
-        "tlsCAFile": "",
-        "tlsInsecure": false,
-        "uri": "${MONGO_URL}",
-        "advanced": "",
-        "uriTabActive": "tab-uri-advanced"
+        "id": "87542421fe41f019",
+        "type": "comment",
+        "z": "5c6c220009097d76",
+        "name": "Interrumpir servidor local",
+        "info": "",
+        "x": 150,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "7e07969316e2b5a4",
+        "type": "comment",
+        "z": "5c6c220009097d76",
+        "name": "Obtener token",
+        "info": "",
+        "x": 110,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0039e1ad7c8a9454",
+        "type": "comment",
+        "z": "5c6c220009097d76",
+        "name": "Sensores por servidor local",
+        "info": "",
+        "x": 150,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "e0f994f68732c1f2",
+        "type": "comment",
+        "z": "5c6c220009097d76",
+        "name": "Recupera servidores locales",
+        "info": "",
+        "x": 160,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "7284333d8ebd6359",
+        "type": "mqtt out",
+        "z": "5c6c220009097d76",
+        "name": "/interrumpir/{SERVER_ID}",
+        "topic": "",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d52403817db3438f",
+        "x": 1990,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "076942bdc401e5d3",
+        "type": "function",
+        "z": "5c6c220009097d76",
+        "name": "prepara mensaje mqtt",
+        "func": "msg.topic = `/interrumpir/${msg.req.params.idServidorLocal}`\n\nmsg.payload = {\n    \"interrumpir\": true\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1740,
+        "y": 360,
+        "wires": [
+            [
+                "7284333d8ebd6359"
+            ]
+        ]
     }
 ]
