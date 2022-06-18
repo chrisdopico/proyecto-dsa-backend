@@ -571,7 +571,7 @@
         "y": 480,
         "wires": [
             [
-                "345bcced7e2b4fea"
+                "bbe075d988c64c20"
             ]
         ]
     },
@@ -605,8 +605,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 770,
-        "y": 480,
+        "x": 930,
+        "y": 460,
         "wires": [
             [
                 "4e58ab3b8710e0f2"
@@ -622,7 +622,7 @@
         "links": [
             "994d236104dac5ef"
         ],
-        "x": 915,
+        "x": 1085,
         "y": 480,
         "wires": []
     },
@@ -635,5 +635,53 @@
         "x": 150,
         "y": 440,
         "wires": []
+    },
+    {
+        "id": "bbe075d988c64c20",
+        "type": "switch",
+        "z": "9dd59f4f9af08f7f",
+        "name": "interrumpir?",
+        "property": "payload.interrumpir",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 730,
+        "y": 480,
+        "wires": [
+            [
+                "345bcced7e2b4fea"
+            ],
+            [
+                "0568011342837b86"
+            ]
+        ]
+    },
+    {
+        "id": "0568011342837b86",
+        "type": "function",
+        "z": "9dd59f4f9af08f7f",
+        "name": "servidor local trabajando",
+        "func": "// define mensaje MQTT de actualizacion de estado\nmsg.payload = {\n    \"idServidorLocal\": env.get(\"SERVER_ID\"),\n    \"estado\": \"trabajando\",\n    \"timestamp\": Date.now()\n}\n\n// cambia estado de servidor local a \"trabajando\"\nflow.set(\"estado\", \"trabajando\")\n\n// resetea el trigger\n// esto elimina los mensajes encolados que vuelven el servidor local\n// a estado \"trabajando\" tras un delay que depende del tipo de sensor\nmsg.reset = true\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 500,
+        "wires": [
+            [
+                "4e58ab3b8710e0f2"
+            ]
+        ]
     }
 ]
