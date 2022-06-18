@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6149686c-326c-4cfc-b1d2-f5079278e98c",
+		"_postman_id": "d1534ff0-5773-47f8-a4e8-25b4479d0b67",
 		"name": "servicio-consulta",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,11 +11,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:9003/servidores-locales",
+					"raw": "https://redsensors-servicio-consulta.eu-gb.cf.appdomain.cloud/servidores-locales",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"redsensors-servicio-consulta",
+						"eu-gb",
+						"cf",
+						"appdomain",
+						"cloud"
 					],
-					"port": "9003",
 					"path": [
 						"servidores-locales"
 					]
@@ -29,11 +33,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:9003/servidores-locales/sl1/sensores",
+					"raw": "https://redsensors-servicio-consulta.eu-gb.cf.appdomain.cloud/servidores-locales/sl1/sensores",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"redsensors-servicio-consulta",
+						"eu-gb",
+						"cf",
+						"appdomain",
+						"cloud"
 					],
-					"port": "9003",
 					"path": [
 						"servidores-locales",
 						"sl1",
@@ -58,11 +66,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:9003/token",
+					"raw": "https://redsensors-servicio-consulta.eu-gb.cf.appdomain.cloud/token",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"redsensors-servicio-consulta",
+						"eu-gb",
+						"cf",
+						"appdomain",
+						"cloud"
 					],
-					"port": "9003",
 					"path": [
 						"token"
 					]
@@ -77,19 +89,32 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer dff2dd2d-6da8-46ee-b0d5-60363d946cab",
+						"value": "Bearer a600028e-0b7b-4de5-aa16-d050929dcd04",
 						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"interrumpir\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:9003/servidores-locales/sl1/interrumpir",
+					"raw": "https://redsensors-servicio-consulta.eu-gb.cf.appdomain.cloud/servidores-locales/sl2/interrumpir",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"redsensors-servicio-consulta",
+						"eu-gb",
+						"cf",
+						"appdomain",
+						"cloud"
 					],
-					"port": "9003",
 					"path": [
 						"servidores-locales",
-						"sl1",
+						"sl2",
 						"interrumpir"
 					]
 				}
