@@ -23,7 +23,7 @@ services:
     networks: 
       - localnet
     environment:
-      - BROKER_SERVICE=servicio-broker
+      - BROKER_SERVICE=ws://redsensors-broker.eu-gb.cf.appdomain.cloud/broker
       - MONGO_URL=mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net
       - MONGO_DB=servidor_central
     ports:

@@ -2,7 +2,7 @@
     {
         "id": "f6f2187d.f17ca8",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Suscripciones MQTT",
         "disabled": false,
         "info": ""
     },
@@ -183,112 +183,6 @@
         "wires": [
             [
                 "d538ad539d14491f"
-            ]
-        ]
-    },
-    {
-        "id": "775adba9944d7083",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 110,
-        "y": 320,
-        "wires": [
-            [
-                "9e2227ab13c13f3e"
-            ]
-        ]
-    },
-    {
-        "id": "9e2227ab13c13f3e",
-        "type": "function",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "func": "msg.payload = [{}]\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 240,
-        "y": 320,
-        "wires": [
-            [
-                "a186928526745232"
-            ]
-        ]
-    },
-    {
-        "id": "a186928526745232",
-        "type": "mongodb4",
-        "z": "f6f2187d.f17ca8",
-        "clientNode": "2ac7539c2e9ea1c6",
-        "collection": "estados_servidores_locales",
-        "operation": "deleteMany",
-        "output": "toArray",
-        "name": "estados_servidores_locales deleteMany",
-        "x": 480,
-        "y": 320,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "54a6f00cf6e8b074",
-        "type": "mongodb4",
-        "z": "f6f2187d.f17ca8",
-        "clientNode": "2ac7539c2e9ea1c6",
-        "collection": "lecturas_sensores",
-        "operation": "deleteMany",
-        "output": "toArray",
-        "name": "lecturas_sensores deleteMany",
-        "x": 450,
-        "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "98508683eae871c3",
-        "type": "function",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "func": "msg.payload = [{}]\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 240,
-        "y": 360,
-        "wires": [
-            [
-                "54a6f00cf6e8b074"
-            ]
-        ]
-    },
-    {
-        "id": "8fb81a6ae6833fcf",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 110,
-        "y": 360,
-        "wires": [
-            [
-                "98508683eae871c3"
             ]
         ]
     }

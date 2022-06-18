@@ -253,10 +253,11 @@
         "links": [
             "c3125558cede7aa1",
             "ea70f3ba3fd69a0e",
-            "a26c142b95ab525b"
+            "a26c142b95ab525b",
+            "4e58ab3b8710e0f2"
         ],
         "x": 65,
-        "y": 480,
+        "y": 580,
         "wires": [
             [
                 "dedfd2774d83d172",
@@ -295,7 +296,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 250,
-        "y": 480,
+        "y": 580,
         "wires": [
             [
                 "1c98f07676cc703a"
@@ -314,7 +315,7 @@
         "finalize": "",
         "libs": [],
         "x": 530,
-        "y": 480,
+        "y": 580,
         "wires": [
             [
                 "2235a0a9a105230a"
@@ -336,7 +337,7 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 170,
-        "y": 520,
+        "y": 620,
         "wires": []
     },
     {
@@ -367,7 +368,7 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 730,
-        "y": 480,
+        "y": 580,
         "wires": []
     },
     {
@@ -533,5 +534,106 @@
                 "9f113a42ef98f914"
             ]
         ]
+    },
+    {
+        "id": "a5f31e03182e9548",
+        "type": "inject",
+        "z": "9dd59f4f9af08f7f",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 480,
+        "wires": [
+            [
+                "25b63c199a159472"
+            ]
+        ]
+    },
+    {
+        "id": "fb07789d6929fc9d",
+        "type": "mqtt in",
+        "z": "9dd59f4f9af08f7f",
+        "name": "/interrumpir/{SERVER_ID}",
+        "topic": "",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "0ebacf60de60e21b",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 1,
+        "x": 530,
+        "y": 480,
+        "wires": [
+            [
+                "345bcced7e2b4fea"
+            ]
+        ]
+    },
+    {
+        "id": "25b63c199a159472",
+        "type": "function",
+        "z": "9dd59f4f9af08f7f",
+        "name": "suscripcion a topico dinamica",
+        "func": "// cada servidor local se suscribe a un topico \"/interrumpir/{SERVER_ID}\"\n// donde SERVER_ID es unico para cada servidor, por lo tanto podemos usar este mecanismo para \n// enviar mensajes con MQTT a cada servidor local especificamente\n\nmsg.action = \"subscribe\"\nmsg.topic = `/interrumpir/${env.get(\"SERVER_ID\")}`\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "fb07789d6929fc9d"
+            ]
+        ]
+    },
+    {
+        "id": "345bcced7e2b4fea",
+        "type": "function",
+        "z": "9dd59f4f9af08f7f",
+        "name": "interrumpir servidor local",
+        "func": "// define mensaje MQTT de actualizacion de estado\nmsg.payload = {\n    \"idServidorLocal\": env.get(\"SERVER_ID\"),\n    \"estado\": \"interrumpido\",\n    \"timestamp\": Date.now()\n}\n\n// cambia estado de servidor local a \"interrumpido\"\nflow.set(\"estado\", \"interrumpido\")\n\n// resetea el trigger\n// esto elimina los mensajes encolados que vuelven el servidor local\n// a estado \"trabajando\" tras un delay que depende del tipo de sensor\nmsg.reset = true\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 480,
+        "wires": [
+            [
+                "4e58ab3b8710e0f2"
+            ]
+        ]
+    },
+    {
+        "id": "4e58ab3b8710e0f2",
+        "type": "link out",
+        "z": "9dd59f4f9af08f7f",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "994d236104dac5ef"
+        ],
+        "x": 915,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "75833fc88d734187",
+        "type": "comment",
+        "z": "9dd59f4f9af08f7f",
+        "name": "Interrupcion por parte del usuario",
+        "info": "",
+        "x": 150,
+        "y": 440,
+        "wires": []
     }
 ]
