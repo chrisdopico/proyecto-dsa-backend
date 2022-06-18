@@ -21,7 +21,7 @@
         "tlsCAFile": "",
         "tlsInsecure": false,
         "uri": "mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net",
-        "advanced": "",
+        "advanced": "{\"maxPoolSize\": 1}",
         "uriTabActive": "tab-uri-advanced"
     },
     {
@@ -172,8 +172,8 @@
         "type": "function",
         "z": "5c6c220009097d76",
         "name": "response",
-        "func": "if(msg.payload.length > 0)\n{\n    msg.payload = msg.payload[0];\n}else\n{\n    msg.payload = {\n        \"mensaje\": \"El servidor local especificado no existe\"\n    }\n    \n    msg.statusCode = 404\n}\n\nreturn msg;",
-        "outputs": 1,
+        "func": "if(msg.payload.length > 0)\n{\n    msg.sensores = msg.payload[0];\n    \n    return [msg, null];\n}else\n{\n    msg.payload = {\n        \"mensaje\": \"El servidor local especificado no existe\"\n    }\n    \n    msg.statusCode = 404\n    \n    return [null, msg];\n}\n",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -182,7 +182,10 @@
         "y": 200,
         "wires": [
             [
-                "249f02b75edc8ce9"
+                "c102520e130563d4"
+            ],
+            [
+                "6249665737d04a79"
             ]
         ]
     },
@@ -193,7 +196,7 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 1030,
+        "x": 1650,
         "y": 200,
         "wires": []
     },
@@ -252,7 +255,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 110,
-        "y": 300,
+        "y": 320,
         "wires": [
             [
                 "aa9e1ba29b5b4cab"
@@ -271,7 +274,7 @@
         "finalize": "",
         "libs": [],
         "x": 290,
-        "y": 300,
+        "y": 320,
         "wires": [
             [
                 "668f6646ff5b441e"
@@ -285,7 +288,7 @@
         "name": "",
         "algorithm": "SHA512",
         "x": 450,
-        "y": 300,
+        "y": 320,
         "wires": [
             [
                 "e846b61caf5b1f47"
@@ -304,7 +307,7 @@
         "finalize": "",
         "libs": [],
         "x": 570,
-        "y": 300,
+        "y": 320,
         "wires": [
             [
                 "3b73689b3abb72a5"
@@ -321,7 +324,7 @@
         "output": "toArray",
         "name": "",
         "x": 700,
-        "y": 300,
+        "y": 320,
         "wires": [
             [
                 "d8b009ae4294a62f"
@@ -336,7 +339,7 @@
         "statusCode": "",
         "headers": {},
         "x": 1670,
-        "y": 300,
+        "y": 320,
         "wires": []
     },
     {
@@ -358,7 +361,7 @@
         "repair": false,
         "outputs": 2,
         "x": 850,
-        "y": 300,
+        "y": 320,
         "wires": [
             [
                 "6bb7afe0411f4bdf"
@@ -380,7 +383,7 @@
         "finalize": "",
         "libs": [],
         "x": 1000,
-        "y": 320,
+        "y": 340,
         "wires": [
             [
                 "9909a36164c767c1"
@@ -399,7 +402,7 @@
         "field": "payload",
         "fieldType": "msg",
         "x": 1020,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "1de6c85290b87ab6"
@@ -416,7 +419,7 @@
         "output": "toArray",
         "name": "insertar token",
         "x": 1360,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "34e58d45a8d7d39b"
@@ -435,7 +438,7 @@
         "finalize": "",
         "libs": [],
         "x": 1190,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "ae9282f3c9a4846a"
@@ -454,7 +457,7 @@
         "finalize": "",
         "libs": [],
         "x": 1520,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "8428ce578afdbe7e"
@@ -471,7 +474,7 @@
             "09e75c8f2e3aa6f0"
         ],
         "x": 1095,
-        "y": 320,
+        "y": 340,
         "wires": []
     },
     {
@@ -483,7 +486,7 @@
             "9909a36164c767c1"
         ],
         "x": 1565,
-        "y": 320,
+        "y": 340,
         "wires": [
             [
                 "8428ce578afdbe7e"
@@ -500,7 +503,7 @@
         "upload": false,
         "swaggerDoc": "",
         "x": 230,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "ef341dc118f4ab03"
@@ -519,7 +522,7 @@
         "finalize": "",
         "libs": [],
         "x": 690,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "4d9661936b05eef3"
@@ -536,7 +539,7 @@
         "output": "toArray",
         "name": "busca token",
         "x": 850,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "767b31fec46a4fbb"
@@ -562,7 +565,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1010,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "c79a48f76e05df13"
@@ -584,7 +587,7 @@
         "finalize": "",
         "libs": [],
         "x": 1160,
-        "y": 440,
+        "y": 460,
         "wires": [
             [
                 "4bac12b49f8d01d6"
@@ -601,7 +604,7 @@
             "46fdae49c2980eb2"
         ],
         "x": 1255,
-        "y": 440,
+        "y": 460,
         "wires": []
     },
     {
@@ -616,7 +619,7 @@
         "finalize": "",
         "libs": [],
         "x": 1840,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "843cdc8f3fc3d9b8"
@@ -631,7 +634,7 @@
         "statusCode": "",
         "headers": {},
         "x": 2170,
-        "y": 400,
+        "y": 420,
         "wires": []
     },
     {
@@ -646,7 +649,7 @@
             "499016cac3d55978"
         ],
         "x": 2095,
-        "y": 440,
+        "y": 460,
         "wires": [
             [
                 "843cdc8f3fc3d9b8"
@@ -665,7 +668,7 @@
         "finalize": "",
         "libs": [],
         "x": 1180,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "f88b68d96b749ee5"
@@ -682,7 +685,7 @@
         "output": "toArray",
         "name": "busca servidor local",
         "x": 1380,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "7c64166813667d01"
@@ -699,7 +702,7 @@
             "46fdae49c2980eb2"
         ],
         "x": 1795,
-        "y": 440,
+        "y": 460,
         "wires": []
     },
     {
@@ -709,7 +712,7 @@
         "name": "Interrumpir servidor local",
         "info": "",
         "x": 150,
-        "y": 360,
+        "y": 380,
         "wires": []
     },
     {
@@ -719,7 +722,7 @@
         "name": "Obtener token",
         "info": "",
         "x": 110,
-        "y": 260,
+        "y": 280,
         "wires": []
     },
     {
@@ -757,7 +760,7 @@
         "expiry": "",
         "broker": "d52403817db3438f",
         "x": 2110,
-        "y": 360,
+        "y": 380,
         "wires": []
     },
     {
@@ -772,7 +775,7 @@
         "finalize": "",
         "libs": [],
         "x": 1880,
-        "y": 360,
+        "y": 380,
         "wires": [
             [
                 "7284333d8ebd6359"
@@ -791,7 +794,7 @@
         "finalize": "",
         "libs": [],
         "x": 520,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "792d7b311c3e80ab"
@@ -811,7 +814,7 @@
             "46fdae49c2980eb2"
         ],
         "x": 635,
-        "y": 440,
+        "y": 460,
         "wires": []
     },
     {
@@ -826,7 +829,7 @@
         "finalize": "",
         "libs": [],
         "x": 1620,
-        "y": 400,
+        "y": 420,
         "wires": [
             [
                 "9282269079566ce1",
@@ -834,6 +837,90 @@
             ],
             [
                 "186594fec6598ece"
+            ]
+        ]
+    },
+    {
+        "id": "7890929343a933df",
+        "type": "mongodb4",
+        "z": "5c6c220009097d76",
+        "clientNode": "412c2389580c0420",
+        "collection": "servidores_locales_con_ultimo_estado",
+        "operation": "find",
+        "output": "toArray",
+        "name": "recupera todos los servidores locales",
+        "x": 1270,
+        "y": 200,
+        "wires": [
+            [
+                "c2f63ced343e7e86"
+            ]
+        ]
+    },
+    {
+        "id": "c102520e130563d4",
+        "type": "function",
+        "z": "5c6c220009097d76",
+        "name": "set query",
+        "func": "msg.payload = [{\n    \"_id\": msg.req.params.idServidorLocal\n}]\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 200,
+        "wires": [
+            [
+                "7890929343a933df"
+            ]
+        ]
+    },
+    {
+        "id": "6249665737d04a79",
+        "type": "link out",
+        "z": "5c6c220009097d76",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "85bba900e9b117a0"
+        ],
+        "x": 995,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "85bba900e9b117a0",
+        "type": "link in",
+        "z": "5c6c220009097d76",
+        "name": "",
+        "links": [
+            "6249665737d04a79"
+        ],
+        "x": 1545,
+        "y": 240,
+        "wires": [
+            [
+                "249f02b75edc8ce9"
+            ]
+        ]
+    },
+    {
+        "id": "c2f63ced343e7e86",
+        "type": "function",
+        "z": "5c6c220009097d76",
+        "name": "",
+        "func": "msg.payload = {\n    ...msg.payload[0],\n    \"sensores\": msg.sensores.sensores\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1500,
+        "y": 200,
+        "wires": [
+            [
+                "249f02b75edc8ce9"
             ]
         ]
     }

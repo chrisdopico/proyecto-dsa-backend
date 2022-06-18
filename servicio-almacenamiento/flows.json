@@ -46,7 +46,7 @@
         "tlsCAFile": "",
         "tlsInsecure": false,
         "uri": "${MONGO_URL}",
-        "advanced": "",
+        "advanced": "{\"maxPoolSize\": 50}",
         "uriTabActive": "tab-uri-advanced"
     },
     {
