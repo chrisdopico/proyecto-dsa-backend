@@ -1,6 +1,6 @@
 [
     {
-        "id": "9dd59f4f9af08f7f",
+        "id": "c8693d9a2f054f0d",
         "type": "tab",
         "label": "Sensores",
         "disabled": false,
@@ -19,24 +19,24 @@
         "protocolVersion": "4",
         "keepalive": "60",
         "cleansession": true,
-        "birthTopic": "/conexion",
+        "birthTopic": "",
         "birthQos": "0",
         "birthPayload": "",
         "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
+        "closeTopic": "/desconexion",
+        "closeQos": "2",
+        "closePayload": "${SERVER_ID}",
         "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
+        "willTopic": "/desconexion",
+        "willQos": "2",
+        "willPayload": "${SERVER_ID}",
         "willMsg": {},
         "sessionExpiry": ""
     },
     {
-        "id": "309f538e916d9ee0",
+        "id": "7777cf0b84186b87",
         "type": "mqtt out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "topic": "/sensores/temperatura",
         "qos": "0",
@@ -48,13 +48,13 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 800,
-        "y": 80,
+        "y": 220,
         "wires": []
     },
     {
-        "id": "84be8568d208e933",
+        "id": "af9e7707ae83d2e5",
         "type": "inject",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "props": [],
         "repeat": "5",
@@ -63,17 +63,17 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 80,
+        "y": 220,
         "wires": [
             [
-                "16c8b6ac48bee143"
+                "769524303aec5fd3"
             ]
         ]
     },
     {
-        "id": "9f113a42ef98f914",
+        "id": "239631973fb8a862",
         "type": "function",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "simular sensores temperatura",
         "func": "const SERVER_ID = env.get(\"SERVER_ID\")\nconst NUM_SENS_TEMPERATURA = parseInt(env.get(\"NUM_SENS_TEMPERATURA\"))\n\nlet mensajes = []\n\nfor(let i=0; i<NUM_SENS_TEMPERATURA; i++)\n{\n    mensajes.push({\n        \"payload\": {\n            \"idServidorLocal\": SERVER_ID,\n            \"idSensor\": `${SERVER_ID}_temperatura_${i}`,\n            \"valor\": Math.random() * 80,\n            \"timestamp\": Date.now()\n        }\n    })\n}\n\nreturn [mensajes];",
         "outputs": 1,
@@ -82,27 +82,27 @@
         "finalize": "",
         "libs": [],
         "x": 550,
-        "y": 80,
+        "y": 220,
         "wires": [
             [
-                "309f538e916d9ee0"
+                "7777cf0b84186b87"
             ]
         ]
     },
     {
-        "id": "1602689b4c4068ed",
+        "id": "bd517ef2f0ee97ec",
         "type": "comment",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "Temperatura",
         "info": "",
         "x": 90,
-        "y": 40,
+        "y": 180,
         "wires": []
     },
     {
-        "id": "b448659501ba2bfd",
+        "id": "4e7e539caf79f44c",
         "type": "inject",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "props": [],
         "repeat": "180",
@@ -111,27 +111,27 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 180,
+        "y": 320,
         "wires": [
             [
-                "febc8b8e14af29ae"
+                "1ad87638b29d738e"
             ]
         ]
     },
     {
-        "id": "cf7a9a9edb32ac7d",
+        "id": "36a58e9734c345ce",
         "type": "comment",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "Presencia",
         "info": "",
         "x": 80,
-        "y": 140,
+        "y": 280,
         "wires": []
     },
     {
-        "id": "f80f2d671d91404f",
+        "id": "ff8e8cb7de2879e4",
         "type": "function",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "simular sensores presencia",
         "func": "const SERVER_ID = env.get(\"SERVER_ID\")\nconst NUM_SENS_PRESENCIA = parseInt(env.get(\"NUM_SENS_PRESENCIA\"))\n\nlet mensajes = []\nlet cambioEstado = null\n\n// por cada sensor de presencia\nfor(let i=0; i<NUM_SENS_PRESENCIA; i++)\n{\n    // 10% de probabilidad de que ocurra\n    if(Math.random() <= 0.1)\n    {\n        let timestamp = Date.now()\n        \n        // inserta lectura del sensor en array de mensajes\n        mensajes.push({\n            \"payload\": {\n                \"idServidorLocal\": SERVER_ID,\n                \"idSensor\": `${SERVER_ID}_presencia_${i}`,\n                \"valor\": 1,\n                \"timestamp\": timestamp\n            }\n        })\n        \n        // si ocurre, define mensaje para cambiar el estado del servidor\n        cambioEstado = {\n            \"payload\": {\n                \"idServidorLocal\": SERVER_ID,\n                \"estado\": \"presencia\",\n                \"timestamp\": timestamp\n            },\n            \"delay\": (Math.random() * 120000) + 60000 //1-3 minutos\n        }\n        \n        // cambia estado de servidor local a \"presencia\"\n        flow.set(\"estado\", \"presencia\")\n    }\n}\n\n// envia mensajes por caminos 1 y 2 en caso de que se cumpla la probabilidad\nreturn [mensajes, cambioEstado];",
         "outputs": 2,
@@ -140,13 +140,13 @@
         "finalize": "",
         "libs": [],
         "x": 540,
-        "y": 180,
+        "y": 320,
         "wires": [
             [
-                "f80514bf9a63499c"
+                "f788958eea882f29"
             ],
             [
-                "ea70f3ba3fd69a0e"
+                "ad4f37ea9d9130e6"
             ]
         ],
         "outputLabels": [
@@ -155,13 +155,13 @@
         ]
     },
     {
-        "id": "f80514bf9a63499c",
+        "id": "f788958eea882f29",
         "type": "mqtt out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "topic": "/sensores/presencia",
-        "qos": "0",
-        "retain": "true",
+        "qos": "2",
+        "retain": "false",
         "respTopic": "",
         "contentType": "",
         "userProps": "",
@@ -169,13 +169,13 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 780,
-        "y": 160,
+        "y": 300,
         "wires": []
     },
     {
-        "id": "66d3f635fa732443",
+        "id": "6b5591f3f1b31541",
         "type": "inject",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "props": [],
         "repeat": "180",
@@ -184,27 +184,27 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 280,
+        "y": 420,
         "wires": [
             [
-                "53ee1373fe7b3e8c"
+                "89638730fd216d8e"
             ]
         ]
     },
     {
-        "id": "38f6cd928673849c",
+        "id": "93070baa8c8103f5",
         "type": "comment",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "Incendio",
         "info": "",
         "x": 80,
-        "y": 240,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "d42a8f52c24758a9",
+        "id": "e9171945fbd0d803",
         "type": "function",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "simular sensores incendio",
         "func": "const SERVER_ID = env.get(\"SERVER_ID\")\nconst NUM_SENS_INCENDIO = parseInt(env.get(\"NUM_SENS_INCENDIO\"))\n\nlet mensajes = []\nlet mensajeCambioEstado = null\n\n// por cada sensor de incendio\nfor(let i=0; i<NUM_SENS_INCENDIO; i++)\n{\n    // 2% de probabilidad de que ocurra\n    if(Math.random() <= 0.02)\n    {\n        let timestamp =  Date.now()\n        \n        // inserta lectura del sensor en array de mensajes\n        mensajes.push({\n            \"payload\": {\n                \"idServidorLocal\": SERVER_ID,\n                \"idSensor\": `${SERVER_ID}_incendio_${i}`,\n                \"valor\": 1,\n                \"timestamp\": timestamp\n            }\n        })\n        \n        // si ocurre, define mensaje para cambiar el estado del servidor\n        mensajeCambioEstado = {\n            \"payload\": {\n                \"idServidorLocal\": SERVER_ID,\n                \"estado\": \"incendio\",\n                \"timestamp\": timestamp\n            },\n            \"delay\": (Math.random() * 1140000) + 60000 //1-20 minutos\n        }\n        \n        // cambia estado de servidor local a \"incendio\"\n        flow.set(\"estado\", \"incendio\")\n    }\n}\n\n// envia mensajes por caminos 1 y 2 en caso de que se cumpla la probabilidad\nreturn [mensajes, mensajeCambioEstado];",
         "outputs": 2,
@@ -213,13 +213,13 @@
         "finalize": "",
         "libs": [],
         "x": 530,
-        "y": 280,
+        "y": 420,
         "wires": [
             [
-                "538025b28b34caac"
+                "1d3cf9783d514f24"
             ],
             [
-                "c3125558cede7aa1"
+                "5689799bfbab4cc3"
             ]
         ],
         "outputLabels": [
@@ -228,13 +228,13 @@
         ]
     },
     {
-        "id": "538025b28b34caac",
+        "id": "1d3cf9783d514f24",
         "type": "mqtt out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "topic": "/sensores/incendio",
-        "qos": "0",
-        "retain": "true",
+        "qos": "2",
+        "retain": "false",
         "respTopic": "",
         "contentType": "",
         "userProps": "",
@@ -242,46 +242,46 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 750,
-        "y": 260,
+        "y": 400,
         "wires": []
     },
     {
-        "id": "994d236104dac5ef",
+        "id": "096b1b783a58f915",
         "type": "link in",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "links": [
-            "c3125558cede7aa1",
-            "ea70f3ba3fd69a0e",
-            "a26c142b95ab525b",
-            "4e58ab3b8710e0f2"
+            "5689799bfbab4cc3",
+            "ad4f37ea9d9130e6",
+            "b011f06ea72e8f72",
+            "2443b162e88c082c"
         ],
-        "x": 65,
-        "y": 580,
+        "x": 55,
+        "y": 760,
         "wires": [
             [
-                "dedfd2774d83d172",
-                "3e7a7cd4d1706008"
+                "e5c039850104cdfc",
+                "e6a2f295564633a4"
             ]
         ]
     },
     {
-        "id": "c3125558cede7aa1",
+        "id": "5689799bfbab4cc3",
         "type": "link out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "mode": "link",
         "links": [
-            "994d236104dac5ef"
+            "096b1b783a58f915"
         ],
         "x": 675,
-        "y": 320,
+        "y": 460,
         "wires": []
     },
     {
-        "id": "3e7a7cd4d1706008",
+        "id": "e6a2f295564633a4",
         "type": "trigger",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "espera {msg.delay} milisegundos",
         "op1": "",
         "op2": "",
@@ -295,18 +295,18 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 250,
-        "y": 580,
+        "x": 240,
+        "y": 760,
         "wires": [
             [
-                "1c98f07676cc703a"
+                "321d4b0817e902db"
             ]
         ]
     },
     {
-        "id": "1c98f07676cc703a",
+        "id": "321d4b0817e902db",
         "type": "function",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "vuelve a estado \"trabajando\"",
         "func": "// define mensaje MQTT de actualizacion de estado\nmsg.payload = {\n    \"idServidorLocal\": env.get(\"SERVER_ID\"),\n    \"estado\": \"trabajando\",\n    \"timestamp\": Date.now()\n}\n\n// cambia estado del servidor local a \"trabajando\"\nflow.set(\"estado\", \"trabajando\")\n\nreturn msg;",
         "outputs": 1,
@@ -314,67 +314,67 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 530,
-        "y": 580,
+        "x": 520,
+        "y": 760,
         "wires": [
             [
-                "2235a0a9a105230a"
+                "e735dcb4b70888c3"
             ]
         ]
     },
     {
-        "id": "dedfd2774d83d172",
+        "id": "e5c039850104cdfc",
         "type": "mqtt out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "topic": "/estado",
-        "qos": "0",
-        "retain": "true",
+        "qos": "2",
+        "retain": "false",
         "respTopic": "",
         "contentType": "",
         "userProps": "",
         "correl": "",
         "expiry": "",
         "broker": "0ebacf60de60e21b",
-        "x": 170,
-        "y": 620,
+        "x": 160,
+        "y": 800,
         "wires": []
     },
     {
-        "id": "ea70f3ba3fd69a0e",
+        "id": "ad4f37ea9d9130e6",
         "type": "link out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "mode": "link",
         "links": [
-            "994d236104dac5ef"
+            "096b1b783a58f915"
         ],
         "x": 695,
-        "y": 220,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "2235a0a9a105230a",
+        "id": "e735dcb4b70888c3",
         "type": "mqtt out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "topic": "/estado",
-        "qos": "0",
-        "retain": "true",
+        "qos": "2",
+        "retain": "false",
         "respTopic": "",
         "contentType": "",
         "userProps": "",
         "correl": "",
         "expiry": "",
         "broker": "0ebacf60de60e21b",
-        "x": 730,
-        "y": 580,
+        "x": 720,
+        "y": 760,
         "wires": []
     },
     {
-        "id": "9726ec859e8a6bfb",
+        "id": "1019893c5baafb71",
         "type": "inject",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "props": [],
         "repeat": "600",
@@ -383,27 +383,27 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 380,
+        "y": 520,
         "wires": [
             [
-                "56dc263bd16e8c39"
+                "e98bcc525bbf07d6"
             ]
         ]
     },
     {
-        "id": "60a8c9ec51dfa7c0",
+        "id": "93ec71b064e00365",
         "type": "comment",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "Interrupcion",
         "info": "",
         "x": 90,
-        "y": 340,
+        "y": 480,
         "wires": []
     },
     {
-        "id": "765b27c6eccb9a89",
+        "id": "2aa20b45673a9186",
         "type": "function",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "interrupir servidor local",
         "func": "// 10% de probabilidad de que ocurra\nif(Math.random() <= 0.1)\n{\n    // define mensaje MQTT de actualizacion de estado\n    msg.payload = {\n        \"idServidorLocal\": env.get(\"SERVER_ID\"),\n        \"estado\": \"interrumpido\",\n        \"timestamp\": Date.now()\n    }\n    \n    // cambia estado de servidor local a \"interrumpido\"\n    flow.set(\"estado\", \"interrumpido\")\n\n    // define tiempo de espera antes de volver a estado \"trabajando\"\n    msg.delay = 60000\n\n    return msg;\n}",
         "outputs": 1,
@@ -412,10 +412,10 @@
         "finalize": "",
         "libs": [],
         "x": 520,
-        "y": 380,
+        "y": 520,
         "wires": [
             [
-                "a26c142b95ab525b"
+                "b011f06ea72e8f72"
             ]
         ],
         "outputLabels": [
@@ -423,22 +423,22 @@
         ]
     },
     {
-        "id": "a26c142b95ab525b",
+        "id": "b011f06ea72e8f72",
         "type": "link out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "mode": "link",
         "links": [
-            "994d236104dac5ef"
+            "096b1b783a58f915"
         ],
         "x": 655,
-        "y": 380,
+        "y": 520,
         "wires": []
     },
     {
-        "id": "56dc263bd16e8c39",
+        "id": "e98bcc525bbf07d6",
         "type": "switch",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "flow.estado != interrumpido",
         "property": "estado",
         "propertyType": "flow",
@@ -453,17 +453,17 @@
         "repair": false,
         "outputs": 1,
         "x": 280,
-        "y": 380,
+        "y": 520,
         "wires": [
             [
-                "765b27c6eccb9a89"
+                "2aa20b45673a9186"
             ]
         ]
     },
     {
-        "id": "53ee1373fe7b3e8c",
+        "id": "89638730fd216d8e",
         "type": "switch",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "flow.estado != interrumpido",
         "property": "estado",
         "propertyType": "flow",
@@ -478,17 +478,17 @@
         "repair": false,
         "outputs": 1,
         "x": 280,
-        "y": 280,
+        "y": 420,
         "wires": [
             [
-                "d42a8f52c24758a9"
+                "e9171945fbd0d803"
             ]
         ]
     },
     {
-        "id": "febc8b8e14af29ae",
+        "id": "1ad87638b29d738e",
         "type": "switch",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "flow.estado != interrumpido",
         "property": "estado",
         "propertyType": "flow",
@@ -503,17 +503,17 @@
         "repair": false,
         "outputs": 1,
         "x": 280,
-        "y": 180,
+        "y": 320,
         "wires": [
             [
-                "f80f2d671d91404f"
+                "ff8e8cb7de2879e4"
             ]
         ]
     },
     {
-        "id": "16c8b6ac48bee143",
+        "id": "769524303aec5fd3",
         "type": "switch",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "flow.estado != interrumpido",
         "property": "estado",
         "propertyType": "flow",
@@ -528,17 +528,17 @@
         "repair": false,
         "outputs": 1,
         "x": 280,
-        "y": 80,
+        "y": 220,
         "wires": [
             [
-                "9f113a42ef98f914"
+                "239631973fb8a862"
             ]
         ]
     },
     {
-        "id": "a5f31e03182e9548",
+        "id": "e7c49d9df413f087",
         "type": "inject",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "props": [],
         "repeat": "",
@@ -547,17 +547,17 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 480,
+        "y": 620,
         "wires": [
             [
-                "25b63c199a159472"
+                "c21dbd81a75dfd4f"
             ]
         ]
     },
     {
-        "id": "fb07789d6929fc9d",
+        "id": "0569d2aee1fbe3e1",
         "type": "mqtt in",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "/interrumpir/{SERVER_ID}",
         "topic": "",
         "qos": "2",
@@ -568,17 +568,17 @@
         "rh": 0,
         "inputs": 1,
         "x": 530,
-        "y": 480,
+        "y": 620,
         "wires": [
             [
-                "bbe075d988c64c20"
+                "54d2b8f20ba750a7"
             ]
         ]
     },
     {
-        "id": "25b63c199a159472",
+        "id": "c21dbd81a75dfd4f",
         "type": "function",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "suscripcion a topico dinamica",
         "func": "// cada servidor local se suscribe a un topico \"/interrumpir/{SERVER_ID}\"\n// donde SERVER_ID es unico para cada servidor, por lo tanto podemos usar este mecanismo para \n// enviar mensajes con MQTT a cada servidor local especificamente\n\nmsg.action = \"subscribe\"\nmsg.topic = `/interrumpir/${env.get(\"SERVER_ID\")}`\n\nreturn msg;",
         "outputs": 1,
@@ -587,17 +587,17 @@
         "finalize": "",
         "libs": [],
         "x": 280,
-        "y": 480,
+        "y": 620,
         "wires": [
             [
-                "fb07789d6929fc9d"
+                "0569d2aee1fbe3e1"
             ]
         ]
     },
     {
-        "id": "345bcced7e2b4fea",
+        "id": "2a87ff3ccf30a3e0",
         "type": "function",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "interrumpir servidor local",
         "func": "// define mensaje MQTT de actualizacion de estado\nmsg.payload = {\n    \"idServidorLocal\": env.get(\"SERVER_ID\"),\n    \"estado\": \"interrumpido\",\n    \"timestamp\": Date.now()\n}\n\n// cambia estado de servidor local a \"interrumpido\"\nflow.set(\"estado\", \"interrumpido\")\n\n// resetea el trigger\n// esto elimina los mensajes encolados que vuelven el servidor local\n// a estado \"trabajando\" tras un delay que depende del tipo de sensor\nmsg.reset = true\n\nreturn msg;",
         "outputs": 1,
@@ -606,40 +606,40 @@
         "finalize": "",
         "libs": [],
         "x": 930,
-        "y": 460,
+        "y": 600,
         "wires": [
             [
-                "4e58ab3b8710e0f2"
+                "2443b162e88c082c"
             ]
         ]
     },
     {
-        "id": "4e58ab3b8710e0f2",
+        "id": "2443b162e88c082c",
         "type": "link out",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "",
         "mode": "link",
         "links": [
-            "994d236104dac5ef"
+            "096b1b783a58f915"
         ],
         "x": 1085,
-        "y": 480,
+        "y": 620,
         "wires": []
     },
     {
-        "id": "75833fc88d734187",
+        "id": "beeda5f1c8125ff1",
         "type": "comment",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "Interrupcion por parte del usuario",
         "info": "",
         "x": 150,
-        "y": 440,
+        "y": 580,
         "wires": []
     },
     {
-        "id": "bbe075d988c64c20",
+        "id": "54d2b8f20ba750a7",
         "type": "switch",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "interrumpir?",
         "property": "payload.interrumpir",
         "propertyType": "msg",
@@ -655,20 +655,20 @@
         "repair": false,
         "outputs": 2,
         "x": 730,
-        "y": 480,
+        "y": 620,
         "wires": [
             [
-                "345bcced7e2b4fea"
+                "2a87ff3ccf30a3e0"
             ],
             [
-                "0568011342837b86"
+                "2f41d6ab69731c9f"
             ]
         ]
     },
     {
-        "id": "0568011342837b86",
+        "id": "2f41d6ab69731c9f",
         "type": "function",
-        "z": "9dd59f4f9af08f7f",
+        "z": "c8693d9a2f054f0d",
         "name": "servidor local trabajando",
         "func": "// define mensaje MQTT de actualizacion de estado\nmsg.payload = {\n    \"idServidorLocal\": env.get(\"SERVER_ID\"),\n    \"estado\": \"trabajando\",\n    \"timestamp\": Date.now()\n}\n\n// cambia estado de servidor local a \"trabajando\"\nflow.set(\"estado\", \"trabajando\")\n\n// resetea el trigger\n// esto elimina los mensajes encolados que vuelven el servidor local\n// a estado \"trabajando\" tras un delay que depende del tipo de sensor\nmsg.reset = true\n\nreturn msg;",
         "outputs": 1,
@@ -677,11 +677,115 @@
         "finalize": "",
         "libs": [],
         "x": 930,
-        "y": 500,
+        "y": 640,
         "wires": [
             [
-                "4e58ab3b8710e0f2"
+                "2443b162e88c082c"
             ]
         ]
+    },
+    {
+        "id": "864f997cde91d5a1",
+        "type": "comment",
+        "z": "c8693d9a2f054f0d",
+        "name": "Registro",
+        "info": "",
+        "x": 80,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "814531b15d8ef137",
+        "type": "inject",
+        "z": "c8693d9a2f054f0d",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "de123ad4fd2f7a80",
+                "fca3d8f3b199a84d"
+            ]
+        ]
+    },
+    {
+        "id": "de123ad4fd2f7a80",
+        "type": "function",
+        "z": "c8693d9a2f054f0d",
+        "name": "crear mensaje de registro de servidor",
+        "func": "const SERVER_ID = env.get(\"SERVER_ID\")\nconst LONGITUD = parseFloat(env.get(\"LONGITUD\"))\nconst LATITUD = parseFloat(env.get(\"LATITUD\"))\n\nconst NUM_SENS_TEMPERATURA = parseInt(env.get(\"NUM_SENS_TEMPERATURA\"))\nconst NUM_SENS_PRESENCIA = parseInt(env.get(\"NUM_SENS_PRESENCIA\"))\nconst NUM_SENS_INCENDIO = parseInt(env.get(\"NUM_SENS_INCENDIO\"))\n\nlet sensores = []\n\n// generar nombre de los sensores de temepratura\nfor(let i=0; i<NUM_SENS_TEMPERATURA; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_temperatura_${i}`,\n        \"type\": \"temperatura\"\n    })\n}\n\n// generar nombre de los sensores de presencia\nfor(let i=0; i<NUM_SENS_PRESENCIA; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_presencia_${i}`,\n        \"type\": \"presencia\"\n    })\n}\n\n// generar nombre de los sensores de incendio\nfor(let i=0; i<NUM_SENS_INCENDIO; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_incendio_${i}`,\n        \"type\": \"incendio\"\n    })\n}\n\nmsg.payload = {\n    \"idServidorLocal\": SERVER_ID,\n    \"longitud\": LONGITUD,\n    \"latitud\": LATITUD,\n    \"sensores\": sensores\n}\n\n// estado inicial del servidor como \"trabajando\"\nflow.set(\"estado\", \"trabajando\")\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 80,
+        "wires": [
+            [
+                "0217f30109a64f61"
+            ]
+        ]
+    },
+    {
+        "id": "0217f30109a64f61",
+        "type": "mqtt out",
+        "z": "c8693d9a2f054f0d",
+        "name": "",
+        "topic": "/registro",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0ebacf60de60e21b",
+        "x": 540,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "fca3d8f3b199a84d",
+        "type": "function",
+        "z": "c8693d9a2f054f0d",
+        "name": "estado inicial trabajando",
+        "func": "// define mensaje MQTT de actualizacion de estado\nmsg.payload = {\n    \"idServidorLocal\": env.get(\"SERVER_ID\"),\n    \"estado\": \"trabajando\",\n    \"timestamp\": Date.now()\n}\n\n// cambia estado de servidor local a \"trabajando\"\nflow.set(\"estado\", \"trabajando\")\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 120,
+        "wires": [
+            [
+                "5f7a0d601181855e"
+            ]
+        ]
+    },
+    {
+        "id": "5f7a0d601181855e",
+        "type": "mqtt out",
+        "z": "c8693d9a2f054f0d",
+        "name": "",
+        "topic": "/estado",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "0ebacf60de60e21b",
+        "x": 540,
+        "y": 120,
+        "wires": []
     }
 ]

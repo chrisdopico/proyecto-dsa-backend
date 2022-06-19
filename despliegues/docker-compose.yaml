@@ -35,6 +35,8 @@ services:
       - localnet
     environment:
       - SERVER_ID=sl1
+      - LATITUD=40.5132234326853
+      - LONGITUD=-3.3505785175614635
       - BROKER_SERVICE=ws://redsensors-broker.eu-gb.cf.appdomain.cloud/broker
       - NUM_SENS_INCENDIO=1
       - NUM_SENS_TEMPERATURA=1
@@ -49,6 +51,8 @@ services:
       - localnet
     environment:
       - SERVER_ID=sl2
+      - LATITUD=40.5132234326853
+      - LONGITUD=3.3505785175614635
       - BROKER_SERVICE=ws://redsensors-broker.eu-gb.cf.appdomain.cloud/broker
       - NUM_SENS_INCENDIO=1
       - NUM_SENS_TEMPERATURA=1
@@ -56,6 +60,22 @@ services:
       - TZ=Europe/Madrid
     ports:
       - 9005:1880
+
+  servidor-local-3:
+    image: servidor-local
+    networks: 
+      - localnet
+    environment:
+      - SERVER_ID=sl3
+      - LATITUD=40.5132234326853
+      - LONGITUD=4.3505785175614635
+      - BROKER_SERVICE=ws://redsensors-broker.eu-gb.cf.appdomain.cloud/broker
+      - NUM_SENS_INCENDIO=1
+      - NUM_SENS_TEMPERATURA=1
+      - NUM_SENS_PRESENCIA=5
+      - TZ=Europe/Madrid
+    ports:
+      - 9006:1880
 
 networks:
   localnet:
