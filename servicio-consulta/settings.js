@@ -494,4 +494,34 @@ module.exports = {
     //    *   - reason: if result is false, the HTTP reason string to return
     //    */
     //},
+
+    /*******************************************************************************
+    * REDSensor Configuration
+    *  - Swagger
+    ******************************************************************************/
+
+    "swagger": {
+        "template": {
+            "swagger": "2.0",
+            "info": {
+                "version": "0.1.0",
+                "title": "Servicio Consulta API",
+                "description": "Servicio Consulta es un API de la empresa REDSensors, para operar y consultar datos de servidores locales.\n\nWeb:\n- [Sistema REDSensors](https://)\n\nGitHub:\n- [Backend](https://github.com/chrisdopico/proyecto-dsa-backend)\n- [Frontend Web](https://github.com/chrisdopico/proyecto-dsa-frontend)\n- [Frontend Móvil](https://github.com/chrisdopico/proyecto-dsa-mobile)",
+                "termsOfService": "http://swagger.io/terms/",
+                "contact": {
+                    "name": "Williams, Justin, Jorge, David, Christian",
+                    "email": "redsensors@swagger.io"
+                },
+                "license": {
+                    "name": "Apache 2.0",
+                    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+                }
+            },
+            "host": "localhost:9003",
+            "basePath": "/",
+            "schemes": [
+                "http"
+            ]
+        }
+    }
 }
