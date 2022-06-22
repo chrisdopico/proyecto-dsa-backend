@@ -12,58 +12,58 @@
         "z": "f6f2187d.f17ca8",
         "name": "",
         "mqtt_port": 1883,
-        "mqtt_ws_bind": "port",
+        "mqtt_ws_bind": "path",
         "mqtt_ws_port": "",
-        "mqtt_ws_path": "",
+        "mqtt_ws_path": "/broker",
         "cert": "",
         "key": "",
         "certname": "",
         "keyname": "",
         "dburl": "",
         "usetls": false,
-        "x": 170,
-        "y": 100,
+        "x": 130,
+        "y": 60,
         "wires": [
             [
-                "b57c6bbb7caf693b"
+                "8ec1c8735b11eb71"
             ],
             [
-                "2ce4eb323b27a44e"
+                "83b0dd959c75df50"
             ]
         ]
     },
     {
-        "id": "b57c6bbb7caf693b",
+        "id": "8ec1c8735b11eb71",
         "type": "debug",
         "z": "f6f2187d.f17ca8",
-        "name": "events",
+        "name": "EVENTS",
         "active": true,
         "tosidebar": false,
         "console": true,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 360,
-        "y": 80,
+        "x": 310,
+        "y": 40,
         "wires": []
     },
     {
-        "id": "2ce4eb323b27a44e",
+        "id": "83b0dd959c75df50",
         "type": "debug",
         "z": "f6f2187d.f17ca8",
-        "name": "publish",
+        "name": "PUBLISH",
         "active": true,
         "tosidebar": false,
         "console": true,
         "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 360,
-        "y": 120,
+        "x": 310,
+        "y": 80,
         "wires": []
     }
 ]

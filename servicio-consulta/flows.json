@@ -51,120 +51,6 @@
         "sessionExpiry": ""
     },
     {
-        "id": "0ab88a55c36416fa",
-        "type": "swagger-doc",
-        "summary": "Servidores Locales",
-        "description": "Devuelve el listado completo de servidores locales",
-        "tags": "servidores-locales",
-        "consumes": "",
-        "produces": "application/json",
-        "parameters": [],
-        "responses": {
-            "200 OK": {
-                "description": "200 OK. Listado servidores locales",
-                "schema": {
-                    "properties": {
-                        "_id": {
-                            "type": "string",
-                            "format": "string"
-                        },
-                        "longitud": {
-                            "type": "number",
-                            "format": "double"
-                        },
-                        "latitud": {
-                            "type": "number",
-                            "format": "double"
-                        },
-                        "estado": {}
-                    }
-                }
-            },
-            "500 Internal Server Error": {
-                "description": "500 Internal Server Error. Error genérico",
-                "schema": {
-                    "properties": {
-                        "mensaje": {
-                            "type": "string",
-                            "format": "string"
-                        }
-                    }
-                }
-            },
-            "default": {
-                "description": "Error inesperado"
-            }
-        },
-        "deprecated": false
-    },
-    {
-        "id": "f05d8d73ddb13ac7",
-        "type": "swagger-doc",
-        "summary": "Servidores Locales por ID",
-        "description": "Devuelve información determinado servidor local",
-        "tags": "servidores-locales",
-        "consumes": "",
-        "produces": "application/json",
-        "parameters": [
-            {
-                "name": "idServidorLocal",
-                "in": "path",
-                "description": "ID del servidor local",
-                "required": true,
-                "type": "string",
-                "format": "string"
-            }
-        ],
-        "responses": {
-            "200 OK": {
-                "description": "200 OK. Listado de sensores por ID de servidor local",
-                "schema": {
-                    "properties": {
-                        "_id": {
-                            "type": "string",
-                            "format": "Id"
-                        },
-                        "longitud": {
-                            "type": "number",
-                            "format": "double"
-                        },
-                        "latitud": {
-                            "type": "number",
-                            "format": "double"
-                        },
-                        "sensores": {}
-                    }
-                }
-            },
-            "404 Not Found": {
-                "description": "404 Not Found. Recurso no encontrado",
-                "schema": {
-                    "properties": {
-                        "mensaje": {
-                            "type": "string",
-                            "format": "string"
-                        }
-                    }
-                }
-            },
-            "500 Internal Server Error": {
-                "description": "500 Internal Server Error. Error genérico",
-                "schema": {
-                    "properties": {
-                        "mensaje": {
-                            "type": "string",
-                            "format": "string"
-                        }
-                    }
-                }
-            },
-            "default": {
-                "description": "Error inesperado"
-            }
-        },
-        "deprecated": false
-    },
-    {
         "id": "6307206ff6aca97e",
         "type": "http in",
         "z": "5c6c220009097d76",
@@ -172,7 +58,7 @@
         "url": "/servidores-locales",
         "method": "get",
         "upload": false,
-        "swaggerDoc": "0ab88a55c36416fa",
+        "swaggerDoc": "",
         "x": 140,
         "y": 100,
         "wires": [
@@ -236,7 +122,7 @@
         "url": "/servidores-locales/:idServidorLocal/sensores",
         "method": "get",
         "upload": false,
-        "swaggerDoc": "f05d8d73ddb13ac7",
+        "swaggerDoc": "",
         "x": 230,
         "y": 200,
         "wires": [
@@ -873,7 +759,7 @@
         "correl": "",
         "expiry": "",
         "broker": "d52403817db3438f",
-        "x": 2110,
+        "x": 2130,
         "y": 380,
         "wires": []
     },
