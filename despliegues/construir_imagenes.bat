@@ -1,3 +1,4 @@
+cd ..
 cd servicio-almacenamiento
 docker build -t servicio-almacenamiento .
 

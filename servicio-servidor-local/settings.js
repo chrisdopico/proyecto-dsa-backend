@@ -254,6 +254,69 @@ module.exports = {
             metrics: false,
             /** Whether or not to include audit events in the log output */
             audit: false
+        },
+        winston: {
+            level: "info",
+            metrics: false,
+            audit: false,
+            handler: function(conf){
+
+                const winston = require('winston');
+                const DailyRotateFile = require("winston-daily-rotate-file");
+
+                const logger = winston.createLogger({
+                    format: winston.format.printf(info => `${new Date(parseInt(info.timestamp)).toISOString()} - ${info.message}`),
+                    transports: [
+                        new DailyRotateFile({
+                            filename: 'servidor-local-%DATE%.log',
+                            datePattern: 'YYYY-MM-DD-HH',
+                            dirname: "./logs",
+                            maxSize: "100m"
+                        })
+                    ]
+                  });
+
+                var levelNames = {
+                    10: "fatal",
+                    20: "error",
+                    30: "warn",
+                    40: "info",
+                    50: "debug",
+                    60: "trace",
+                    98: "audit",
+                    99: "metric"
+                };
+
+                var consoleLogger = function(msg) {
+                    if (msg.level == "metric" || msg.level == "audit") {
+                        return ("["+levelNames[msg.level]+"] "+JSON.stringify(msg));
+                    } else {
+                        if (msg.msg && msg.msg.stack) {
+                            return ("["+levelNames[msg.level]+"] "+(msg.type?"["+msg.type+":"+(msg.name||msg.id)+"] ":"")+msg.msg.stack);
+                        } else {
+                            var message = msg.msg;
+                            try {
+                                if (typeof message === 'object' && message !== null && message.toString() === '[object Object]' && message.message) {
+                                    message = message.message;
+                                }
+                            } catch(e){
+                                message = 'Exception trying to log: ' + JSON.stringify(msg);
+                            }
+                
+                            return ("["+levelNames[msg.level]+"] "+(msg.type?"["+msg.type+":"+(msg.name||msg.id)+"] ":"")+message);
+                        }
+                    }
+                }
+
+                return function(msg){
+                    
+                    logger.log({
+                        level: levelNames[msg.level],
+                        message: consoleLogger(msg),
+                        timestamp: msg.timestamp
+                    })
+                }
+            }
         }
     },
 
