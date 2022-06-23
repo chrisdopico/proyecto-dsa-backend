@@ -73,14 +73,21 @@ module.exports = {
     /** To password protect the Node-RED editor and admin API, the following
      * property can be used. See http://nodered.org/docs/security.html for details.
      */
-    //adminAuth: {
-    //    type: "credentials",
-    //    users: [{
-    //        username: "admin",
-    //        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
-    //        permissions: "*"
-    //    }]
-    //},
+    adminAuth: {
+        type: "credentials",
+        users: [
+            {
+                username: "admin",
+                password: "$2b$08$abvFNU95g.A.tPGdJ/ASNOV3Pr0H7mkLCNJ2sQuG4JerDtU2/cTwK",
+                permissions: "*"
+            },
+            {
+                username: "redsensors",
+                password: "$2b$08$SCCHtnhwbd2xJhFzqezKKOyAbWEaeilqguBPcL4mOkJeq.iFcNZFa",
+                permissions: "read"
+            }
+        ]
+    },
 
     /** The following property can be used to enable HTTPS
      * This property can be either an object, containing both a (private) key
@@ -259,7 +266,7 @@ module.exports = {
             level: "info",
             metrics: false,
             audit: false,
-            handler: function(conf){
+            handler: function (conf) {
 
                 const winston = require('winston');
                 const DailyRotateFile = require("winston-daily-rotate-file");
@@ -274,7 +281,7 @@ module.exports = {
                             maxSize: "100m"
                         })
                     ]
-                  });
+                });
 
                 var levelNames = {
                     10: "fatal",
@@ -287,29 +294,29 @@ module.exports = {
                     99: "metric"
                 };
 
-                var consoleLogger = function(msg) {
+                var consoleLogger = function (msg) {
                     if (msg.level == "metric" || msg.level == "audit") {
-                        return ("["+levelNames[msg.level]+"] "+JSON.stringify(msg));
+                        return ("[" + levelNames[msg.level] + "] " + JSON.stringify(msg));
                     } else {
                         if (msg.msg && msg.msg.stack) {
-                            return ("["+levelNames[msg.level]+"] "+(msg.type?"["+msg.type+":"+(msg.name||msg.id)+"] ":"")+msg.msg.stack);
+                            return ("[" + levelNames[msg.level] + "] " + (msg.type ? "[" + msg.type + ":" + (msg.name || msg.id) + "] " : "") + msg.msg.stack);
                         } else {
                             var message = msg.msg;
                             try {
                                 if (typeof message === 'object' && message !== null && message.toString() === '[object Object]' && message.message) {
                                     message = message.message;
                                 }
-                            } catch(e){
+                            } catch (e) {
                                 message = 'Exception trying to log: ' + JSON.stringify(msg);
                             }
-                
-                            return ("["+levelNames[msg.level]+"] "+(msg.type?"["+msg.type+":"+(msg.name||msg.id)+"] ":"")+message);
+
+                            return ("[" + levelNames[msg.level] + "] " + (msg.type ? "[" + msg.type + ":" + (msg.name || msg.id) + "] " : "") + message);
                         }
                     }
                 }
 
-                return function(msg){
-                    
+                return function (msg) {
+
                     logger.log({
                         level: levelNames[msg.level],
                         message: consoleLogger(msg),

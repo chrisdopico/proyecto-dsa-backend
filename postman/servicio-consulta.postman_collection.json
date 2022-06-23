@@ -11,12 +11,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://redsensors-servicio-consulta.eu-gb.cf.appdomain.cloud/servidores-locales",
+					"raw": "https://redsensors-servicio-consulta.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/servidores-locales",
 					"protocol": "https",
 					"host": [
 						"redsensors-servicio-consulta",
+						"pj87j18q4um",
 						"eu-gb",
-						"cf",
+						"codeengine",
 						"appdomain",
 						"cloud"
 					],
@@ -29,16 +30,35 @@
 		},
 		{
 			"name": "/servidores-locales/{id}/sensores",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 47ab1e21-59f1-458d-84c6-22d6d5652535",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"interrumpir\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "https://redsensors-servicio-consulta.eu-gb.cf.appdomain.cloud/servidores-locales/sl1/sensores",
+					"raw": "https://redsensors-servicio-consulta.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/servidores-locales/sl1/sensores",
 					"protocol": "https",
 					"host": [
 						"redsensors-servicio-consulta",
+						"pj87j18q4um",
 						"eu-gb",
-						"cf",
+						"codeengine",
 						"appdomain",
 						"cloud"
 					],
@@ -66,12 +86,13 @@
 					}
 				},
 				"url": {
-					"raw": "https://redsensors-servicio-consulta.eu-gb.cf.appdomain.cloud/token",
+					"raw": "https://redsensors-servicio-consulta.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/token",
 					"protocol": "https",
 					"host": [
 						"redsensors-servicio-consulta",
+						"pj87j18q4um",
 						"eu-gb",
-						"cf",
+						"codeengine",
 						"appdomain",
 						"cloud"
 					],
@@ -89,13 +110,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer a600028e-0b7b-4de5-aa16-d050929dcd04",
+						"value": "Bearer 47ab1e21-59f1-458d-84c6-22d6d5652535",
 						"type": "default"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"interrumpir\": true\r\n}",
+					"raw": "{\r\n    \"interrumpir\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -103,18 +124,19 @@
 					}
 				},
 				"url": {
-					"raw": "https://redsensors-servicio-consulta.eu-gb.cf.appdomain.cloud/servidores-locales/sl2/interrumpir",
+					"raw": "https://redsensors-servicio-consulta.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/servidores-locales/sl1/interrumpir",
 					"protocol": "https",
 					"host": [
 						"redsensors-servicio-consulta",
+						"pj87j18q4um",
 						"eu-gb",
-						"cf",
+						"codeengine",
 						"appdomain",
 						"cloud"
 					],
 					"path": [
 						"servidores-locales",
-						"sl2",
+						"sl1",
 						"interrumpir"
 					]
 				}

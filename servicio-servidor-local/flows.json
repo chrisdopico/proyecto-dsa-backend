@@ -19,9 +19,9 @@
         "protocolVersion": "4",
         "keepalive": "60",
         "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
+        "birthTopic": "/conexion",
+        "birthQos": "2",
+        "birthPayload": "${SERVER_ID}",
         "birthMsg": {},
         "closeTopic": "/desconexion",
         "closeQos": "2",
@@ -48,7 +48,7 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 800,
-        "y": 220,
+        "y": 180,
         "wires": []
     },
     {
@@ -63,7 +63,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 220,
+        "y": 180,
         "wires": [
             [
                 "769524303aec5fd3"
@@ -82,7 +82,7 @@
         "finalize": "",
         "libs": [],
         "x": 550,
-        "y": 220,
+        "y": 180,
         "wires": [
             [
                 "7777cf0b84186b87"
@@ -96,7 +96,7 @@
         "name": "Temperatura",
         "info": "",
         "x": 90,
-        "y": 180,
+        "y": 140,
         "wires": []
     },
     {
@@ -111,7 +111,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 320,
+        "y": 280,
         "wires": [
             [
                 "1ad87638b29d738e"
@@ -125,7 +125,7 @@
         "name": "Presencia",
         "info": "",
         "x": 80,
-        "y": 280,
+        "y": 240,
         "wires": []
     },
     {
@@ -140,7 +140,7 @@
         "finalize": "",
         "libs": [],
         "x": 540,
-        "y": 320,
+        "y": 280,
         "wires": [
             [
                 "f788958eea882f29"
@@ -169,7 +169,7 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 780,
-        "y": 300,
+        "y": 260,
         "wires": []
     },
     {
@@ -184,7 +184,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 420,
+        "y": 380,
         "wires": [
             [
                 "89638730fd216d8e"
@@ -198,7 +198,7 @@
         "name": "Incendio",
         "info": "",
         "x": 80,
-        "y": 380,
+        "y": 340,
         "wires": []
     },
     {
@@ -206,14 +206,14 @@
         "type": "function",
         "z": "c8693d9a2f054f0d",
         "name": "simular sensores incendio",
-        "func": "const SERVER_ID = env.get(\"SERVER_ID\")\nconst NUM_SENS_INCENDIO = parseInt(env.get(\"NUM_SENS_INCENDIO\"))\n\nlet mensajes = []\nlet mensajeCambioEstado = null\n\n// por cada sensor de incendio\nfor(let i=0; i<NUM_SENS_INCENDIO; i++)\n{\n    // 2% de probabilidad de que ocurra\n    if(Math.random() <= 0.02)\n    {\n        let timestamp =  Date.now()\n        let mensaje = {\n            \"payload\": {\n                \"idServidorLocal\": SERVER_ID,\n                \"idSensor\": `${SERVER_ID}_incendio_${i}`,\n                \"valor\": 1,\n                \"timestamp\": timestamp\n            }\n        }\n        \n        // inserta lectura del sensor en array de mensajes\n        mensajes.push(mensaje)\n        \n        // si ocurre, define mensaje para cambiar el estado del servidor\n        mensajeCambioEstado = {\n            \"payload\": {\n                \"idServidorLocal\": SERVER_ID,\n                \"estado\": \"incendio\",\n                \"timestamp\": timestamp\n            },\n            \"delay\": (Math.random() * 1140000) + 60000 //1-20 minutos\n        }\n        \n        // cambia estado de servidor local a \"incendio\"\n        flow.set(\"estado\", \"incendio\")\n        \n        // LOG\n        node.log(\"[publica] [/sensores/presencia] \" + JSON.stringify(mensaje.payload))\n    }\n}\n\n// LOG\nif(mensajeCambioEstado !== null){node.log(\"[publica] [/estado] \" + mensajeCambioEstado.payload)}\n\n// envia mensajes por caminos 1 y 2 en caso de que se cumpla la probabilidad\nreturn [mensajes, mensajeCambioEstado];",
+        "func": "const SERVER_ID = env.get(\"SERVER_ID\")\nconst NUM_SENS_INCENDIO = parseInt(env.get(\"NUM_SENS_INCENDIO\"))\n\nlet mensajes = []\nlet mensajeCambioEstado = null\n\n// por cada sensor de incendio\nfor(let i=0; i<NUM_SENS_INCENDIO; i++)\n{\n    // 2% de probabilidad de que ocurra\n    if(Math.random() <= 0.02)\n    {\n        let timestamp =  Date.now()\n        let mensaje = {\n            \"payload\": {\n                \"idServidorLocal\": SERVER_ID,\n                \"idSensor\": `${SERVER_ID}_incendio_${i}`,\n                \"valor\": 1,\n                \"timestamp\": timestamp\n            }\n        }\n        \n        // inserta lectura del sensor en array de mensajes\n        mensajes.push(mensaje)\n        \n        // si ocurre, define mensaje para cambiar el estado del servidor\n        mensajeCambioEstado = {\n            \"payload\": {\n                \"idServidorLocal\": SERVER_ID,\n                \"estado\": \"incendio\",\n                \"timestamp\": timestamp\n            },\n            \"delay\": (Math.random() * 1140000) + 60000 //1-20 minutos\n        }\n        \n        // cambia estado de servidor local a \"incendio\"\n        flow.set(\"estado\", \"incendio\")\n        \n        // LOG\n        node.log(\"[publica] [/sensores/presencia] \" + JSON.stringify(mensaje.payload))\n    }\n}\n\n// LOG\nif(mensajeCambioEstado !== null){node.log(\"[publica] [/estado] \" + JSON.stringify(mensajeCambioEstado.payload))}\n\n// envia mensajes por caminos 1 y 2 en caso de que se cumpla la probabilidad\nreturn [mensajes, mensajeCambioEstado];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 530,
-        "y": 420,
+        "y": 380,
         "wires": [
             [
                 "1d3cf9783d514f24"
@@ -242,7 +242,7 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 750,
-        "y": 400,
+        "y": 360,
         "wires": []
     },
     {
@@ -257,7 +257,7 @@
             "2443b162e88c082c"
         ],
         "x": 55,
-        "y": 760,
+        "y": 720,
         "wires": [
             [
                 "e5c039850104cdfc",
@@ -275,7 +275,7 @@
             "096b1b783a58f915"
         ],
         "x": 675,
-        "y": 460,
+        "y": 420,
         "wires": []
     },
     {
@@ -296,7 +296,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 240,
-        "y": 760,
+        "y": 720,
         "wires": [
             [
                 "321d4b0817e902db"
@@ -315,7 +315,7 @@
         "finalize": "",
         "libs": [],
         "x": 520,
-        "y": 760,
+        "y": 720,
         "wires": [
             [
                 "e735dcb4b70888c3"
@@ -337,7 +337,7 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 160,
-        "y": 800,
+        "y": 760,
         "wires": []
     },
     {
@@ -350,7 +350,7 @@
             "096b1b783a58f915"
         ],
         "x": 695,
-        "y": 360,
+        "y": 320,
         "wires": []
     },
     {
@@ -368,7 +368,7 @@
         "expiry": "",
         "broker": "0ebacf60de60e21b",
         "x": 720,
-        "y": 760,
+        "y": 720,
         "wires": []
     },
     {
@@ -383,7 +383,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 520,
+        "y": 480,
         "wires": [
             [
                 "e98bcc525bbf07d6"
@@ -397,7 +397,7 @@
         "name": "Interrupcion",
         "info": "",
         "x": 90,
-        "y": 480,
+        "y": 440,
         "wires": []
     },
     {
@@ -412,7 +412,7 @@
         "finalize": "",
         "libs": [],
         "x": 520,
-        "y": 520,
+        "y": 480,
         "wires": [
             [
                 "b011f06ea72e8f72"
@@ -432,7 +432,7 @@
             "096b1b783a58f915"
         ],
         "x": 655,
-        "y": 520,
+        "y": 480,
         "wires": []
     },
     {
@@ -453,7 +453,7 @@
         "repair": false,
         "outputs": 1,
         "x": 280,
-        "y": 520,
+        "y": 480,
         "wires": [
             [
                 "2aa20b45673a9186"
@@ -478,7 +478,7 @@
         "repair": false,
         "outputs": 1,
         "x": 280,
-        "y": 420,
+        "y": 380,
         "wires": [
             [
                 "e9171945fbd0d803"
@@ -503,7 +503,7 @@
         "repair": false,
         "outputs": 1,
         "x": 280,
-        "y": 320,
+        "y": 280,
         "wires": [
             [
                 "ff8e8cb7de2879e4"
@@ -528,7 +528,7 @@
         "repair": false,
         "outputs": 1,
         "x": 280,
-        "y": 220,
+        "y": 180,
         "wires": [
             [
                 "239631973fb8a862"
@@ -547,7 +547,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 90,
-        "y": 620,
+        "y": 580,
         "wires": [
             [
                 "c21dbd81a75dfd4f"
@@ -568,7 +568,7 @@
         "rh": 0,
         "inputs": 1,
         "x": 530,
-        "y": 620,
+        "y": 580,
         "wires": [
             [
                 "54d2b8f20ba750a7"
@@ -587,7 +587,7 @@
         "finalize": "",
         "libs": [],
         "x": 280,
-        "y": 620,
+        "y": 580,
         "wires": [
             [
                 "0569d2aee1fbe3e1"
@@ -606,7 +606,7 @@
         "finalize": "",
         "libs": [],
         "x": 930,
-        "y": 600,
+        "y": 560,
         "wires": [
             [
                 "2443b162e88c082c"
@@ -623,7 +623,7 @@
             "096b1b783a58f915"
         ],
         "x": 1085,
-        "y": 620,
+        "y": 580,
         "wires": []
     },
     {
@@ -633,7 +633,7 @@
         "name": "Interrupcion por parte del usuario",
         "info": "",
         "x": 150,
-        "y": 580,
+        "y": 540,
         "wires": []
     },
     {
@@ -655,7 +655,7 @@
         "repair": false,
         "outputs": 2,
         "x": 730,
-        "y": 620,
+        "y": 580,
         "wires": [
             [
                 "2a87ff3ccf30a3e0"
@@ -677,7 +677,7 @@
         "finalize": "",
         "libs": [],
         "x": 930,
-        "y": 640,
+        "y": 600,
         "wires": [
             [
                 "2443b162e88c082c"
@@ -709,8 +709,7 @@
         "y": 80,
         "wires": [
             [
-                "de123ad4fd2f7a80",
-                "fca3d8f3b199a84d"
+                "de123ad4fd2f7a80"
             ]
         ]
     },
@@ -719,7 +718,7 @@
         "type": "function",
         "z": "c8693d9a2f054f0d",
         "name": "crear mensaje de registro de servidor",
-        "func": "const SERVER_ID = env.get(\"SERVER_ID\")\nconst LONGITUD = parseFloat(env.get(\"LONGITUD\"))\nconst LATITUD = parseFloat(env.get(\"LATITUD\"))\n\nconst NUM_SENS_TEMPERATURA = parseInt(env.get(\"NUM_SENS_TEMPERATURA\"))\nconst NUM_SENS_PRESENCIA = parseInt(env.get(\"NUM_SENS_PRESENCIA\"))\nconst NUM_SENS_INCENDIO = parseInt(env.get(\"NUM_SENS_INCENDIO\"))\n\nlet sensores = []\n\n// generar nombre de los sensores de temepratura\nfor(let i=0; i<NUM_SENS_TEMPERATURA; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_temperatura_${i}`,\n        \"type\": \"temperatura\"\n    })\n}\n\n// generar nombre de los sensores de presencia\nfor(let i=0; i<NUM_SENS_PRESENCIA; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_presencia_${i}`,\n        \"type\": \"presencia\"\n    })\n}\n\n// generar nombre de los sensores de incendio\nfor(let i=0; i<NUM_SENS_INCENDIO; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_incendio_${i}`,\n        \"type\": \"incendio\"\n    })\n}\n\nmsg.payload = {\n    \"idServidorLocal\": SERVER_ID,\n    \"longitud\": LONGITUD,\n    \"latitud\": LATITUD,\n    \"sensores\": sensores\n}\n\n// LOG\nnode.log(\"[publica] [/registro] \" + JSON.stringify(msg.payload))\n\nreturn msg;",
+        "func": "const SERVER_ID = env.get(\"SERVER_ID\")\nconst LONGITUD = parseFloat(env.get(\"LONGITUD\"))\nconst LATITUD = parseFloat(env.get(\"LATITUD\"))\n\nconst NUM_SENS_TEMPERATURA = parseInt(env.get(\"NUM_SENS_TEMPERATURA\"))\nconst NUM_SENS_PRESENCIA = parseInt(env.get(\"NUM_SENS_PRESENCIA\"))\nconst NUM_SENS_INCENDIO = parseInt(env.get(\"NUM_SENS_INCENDIO\"))\n\nlet sensores = []\n\n// generar nombre de los sensores de temepratura\nfor(let i=0; i<NUM_SENS_TEMPERATURA; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_temperatura_${i}`,\n        \"type\": \"temperatura\"\n    })\n}\n\n// generar nombre de los sensores de presencia\nfor(let i=0; i<NUM_SENS_PRESENCIA; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_presencia_${i}`,\n        \"type\": \"presencia\"\n    })\n}\n\n// generar nombre de los sensores de incendio\nfor(let i=0; i<NUM_SENS_INCENDIO; i++)\n{\n    sensores.push({\n        \"idSensor\": `${SERVER_ID}_incendio_${i}`,\n        \"type\": \"incendio\"\n    })\n}\n\nmsg.payload = {\n    \"idServidorLocal\": SERVER_ID,\n    \"longitud\": LONGITUD,\n    \"latitud\": LATITUD,\n    \"sensores\": sensores\n}\n\n// cambia estado de servidor local a \"trabajando\"\nflow.set(\"estado\", \"trabajando\")\n\n// LOG\nnode.log(\"[publica] [/registro] \" + JSON.stringify(msg.payload))\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -749,43 +748,6 @@
         "broker": "0ebacf60de60e21b",
         "x": 540,
         "y": 80,
-        "wires": []
-    },
-    {
-        "id": "fca3d8f3b199a84d",
-        "type": "function",
-        "z": "c8693d9a2f054f0d",
-        "name": "estado inicial trabajando",
-        "func": "// define mensaje MQTT de actualizacion de estado\nmsg.payload = {\n    \"idServidorLocal\": env.get(\"SERVER_ID\"),\n    \"estado\": \"trabajando\",\n    \"timestamp\": Date.now()\n}\n\n// cambia estado de servidor local a \"trabajando\"\nflow.set(\"estado\", \"trabajando\")\n\n// LOG\nnode.log(\"[publica] [/estado] \" + JSON.stringify(msg.payload))\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 270,
-        "y": 120,
-        "wires": [
-            [
-                "5f7a0d601181855e"
-            ]
-        ]
-    },
-    {
-        "id": "5f7a0d601181855e",
-        "type": "mqtt out",
-        "z": "c8693d9a2f054f0d",
-        "name": "",
-        "topic": "/estado",
-        "qos": "2",
-        "retain": "false",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "0ebacf60de60e21b",
-        "x": 540,
-        "y": 120,
         "wires": []
     }
 ]
