@@ -28,7 +28,7 @@
         "id": "d52403817db3438f",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "ws://redsensors-broker.eu-gb.cf.appdomain.cloud/broker",
+        "broker": "${BROKER_SERVICE}",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
