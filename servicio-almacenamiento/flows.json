@@ -122,7 +122,7 @@
         "output": "toArray",
         "name": "insertOne",
         "x": 660,
-        "y": 280,
+        "y": 300,
         "wires": [
             []
         ]
@@ -132,7 +132,7 @@
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "preparar insercion mongodb",
-        "func": "msg.payload = [{\n    \"idSensor\": msg.payload.idSensor,\n    \"timestamp\": new Date(msg.payload.timestamp),\n    \"valor\": msg.payload.valor\n}]\n\nmsg.collection = \"lecturas_sensores\"\nmsg.operation = \"insertOne\"\n\nreturn msg;",
+        "func": "// LOG\nnode.log(`[recibe] [${msg.topic}] ` + JSON.stringify(msg.payload))\n\nmsg.payload = [{\n    \"idSensor\": msg.payload.idSensor,\n    \"timestamp\": new Date(msg.payload.timestamp),\n    \"valor\": msg.payload.valor\n}]\n\nmsg.collection = \"lecturas_sensores\"\nmsg.operation = \"insertOne\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -172,7 +172,7 @@
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "preparar insercion mongodb",
-        "func": "msg.payload = [{\n    \"idServidorLocal\": msg.payload.idServidorLocal,\n    \"estado\": msg.payload.estado,\n    \"timestamp\": new Date(msg.payload.timestamp)\n}]\n\nmsg.collection = \"estados_servidores_locales\"\nmsg.operation = \"insertOne\"\n\nreturn msg;",
+        "func": "// LOG\nnode.log(`[recibe] [${msg.topic}] ` + JSON.stringify(msg.payload))\n\nmsg.payload = [{\n    \"idServidorLocal\": msg.payload.idServidorLocal,\n    \"estado\": msg.payload.estado,\n    \"timestamp\": new Date(msg.payload.timestamp)\n}]\n\nmsg.collection = \"estados_servidores_locales\"\nmsg.operation = \"insertOne\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -200,7 +200,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 100,
-        "y": 560,
+        "y": 600,
         "wires": [
             [
                 "c2f29b49767af872",
@@ -215,7 +215,7 @@
         "name": "Registrar nuevo servidor local y sensores",
         "info": "",
         "x": 200,
-        "y": 460,
+        "y": 500,
         "wires": []
     },
     {
@@ -223,14 +223,14 @@
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "find servidor local",
-        "func": "msg.servidorLocal = msg.payload\n\nmsg.payload = [{\n    \"_id\": msg.payload.idServidorLocal\n}]\n\nreturn msg;",
+        "func": "// LOG\nnode.log(`[recibe] [${msg.topic}] ` + JSON.stringify(msg.payload))\n\nmsg.servidorLocal = msg.payload\n\nmsg.payload = [{\n    \"_id\": msg.payload.idServidorLocal\n}]\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 290,
-        "y": 520,
+        "y": 560,
         "wires": [
             [
                 "f2a548dd52c24703"
@@ -249,7 +249,7 @@
         "finalize": "",
         "libs": [],
         "x": 270,
-        "y": 600,
+        "y": 640,
         "wires": [
             [
                 "303df59b17efc454"
@@ -266,7 +266,7 @@
         "output": "toArray",
         "name": "",
         "x": 460,
-        "y": 520,
+        "y": 560,
         "wires": [
             [
                 "dd9f0b82e7cb67cb"
@@ -289,7 +289,7 @@
         "repair": false,
         "outputs": 1,
         "x": 620,
-        "y": 520,
+        "y": 560,
         "wires": [
             [
                 "b133e25a51bfd6b9"
@@ -301,14 +301,14 @@
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "insert nuevo servidor local",
-        "func": "msg.payload = [{\n    \"_id\": msg.servidorLocal.idServidorLocal,\n    \"longitud\": msg.servidorLocal.longitud,\n    \"latitud\": msg.servidorLocal.latitud\n}]\n\nreturn msg;",
+        "func": "msg.payload = [{\n    \"_id\": msg.servidorLocal.idServidorLocal,\n    \"longitud\": msg.servidorLocal.longitud,\n    \"latitud\": msg.servidorLocal.latitud\n}]\n\n// LOG\nnode.log(\"[insertOne] [servidores_locales] \" + JSON.stringify(msg.payload[0]))\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 830,
-        "y": 520,
+        "y": 560,
         "wires": [
             [
                 "82cf8fde45a8568f"
@@ -325,7 +325,7 @@
         "output": "toArray",
         "name": "",
         "x": 1020,
-        "y": 520,
+        "y": 560,
         "wires": [
             []
         ]
@@ -342,7 +342,7 @@
         "stream": false,
         "addname": "",
         "x": 410,
-        "y": 600,
+        "y": 640,
         "wires": [
             [
                 "e524533b8363a3c1"
@@ -361,7 +361,7 @@
         "finalize": "",
         "libs": [],
         "x": 550,
-        "y": 600,
+        "y": 640,
         "wires": [
             [
                 "d22f1d86970b7ac5"
@@ -378,7 +378,7 @@
         "output": "toArray",
         "name": "",
         "x": 700,
-        "y": 600,
+        "y": 640,
         "wires": [
             [
                 "a6a8c7f56a179af6"
@@ -401,7 +401,7 @@
         "repair": false,
         "outputs": 1,
         "x": 860,
-        "y": 600,
+        "y": 640,
         "wires": [
             [
                 "1fd8c1a93c23460a"
@@ -413,14 +413,14 @@
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "insert nuevo sensor",
-        "func": "msg.payload = [{\n    \"_id\": msg.sensor.idSensor,\n    \"idServidorLocal\": msg.servidorLocal.idServidorLocal,\n    \"type\": msg.sensor.type\n}]\n\nreturn msg;",
+        "func": "msg.payload = [{\n    \"_id\": msg.sensor.idSensor,\n    \"idServidorLocal\": msg.servidorLocal.idServidorLocal,\n    \"type\": msg.sensor.type\n}]\n\n// LOG\nnode.log(\"[insertOne] [sensores] \" + JSON.stringify(msg.payload[0]))\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1050,
-        "y": 600,
+        "y": 640,
         "wires": [
             [
                 "47e2b74a5af85a83"
@@ -437,7 +437,7 @@
         "output": "toArray",
         "name": "",
         "x": 1220,
-        "y": 600,
+        "y": 640,
         "wires": [
             []
         ]
@@ -478,7 +478,7 @@
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "preparar insercion mongodb",
-        "func": "msg.payload = [{\n    \"idServidorLocal\": msg.payload,\n    \"estado\": \"desconectado\",\n    \"timestamp\": new Date()\n}]\n\nmsg.collection = \"estados_servidores_locales\"\nmsg.operation = \"insertOne\"\n\nreturn msg;",
+        "func": "// LOG\nnode.log(`[recibe] [${msg.topic}] ` + JSON.stringify(msg.payload))\n\nmsg.payload = [{\n    \"idServidorLocal\": msg.payload,\n    \"estado\": \"desconectado\",\n    \"timestamp\": new Date()\n}]\n\nmsg.collection = \"estados_servidores_locales\"\nmsg.operation = \"insertOne\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -486,6 +486,46 @@
         "libs": [],
         "x": 400,
         "y": 340,
+        "wires": [
+            [
+                "d538ad539d14491f"
+            ]
+        ]
+    },
+    {
+        "id": "1c1d595f84c63ffd",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "/conexion",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "847187c03429c5ad",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 400,
+        "wires": [
+            [
+                "4abc6e5c29c3c5c7"
+            ]
+        ]
+    },
+    {
+        "id": "4abc6e5c29c3c5c7",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "preparar insercion mongodb",
+        "func": "// LOG\nnode.log(`[recibe] [${msg.topic}] ` + JSON.stringify(msg.payload))\n\nmsg.payload = [{\n    \"idServidorLocal\": msg.payload,\n    \"estado\": \"trabajando\",\n    \"timestamp\": new Date()\n}]\n\nmsg.collection = \"estados_servidores_locales\"\nmsg.operation = \"insertOne\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 400,
         "wires": [
             [
                 "d538ad539d14491f"

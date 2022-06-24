@@ -73,14 +73,21 @@ module.exports = {
     /** To password protect the Node-RED editor and admin API, the following
      * property can be used. See http://nodered.org/docs/security.html for details.
      */
-    //adminAuth: {
-    //    type: "credentials",
-    //    users: [{
-    //        username: "admin",
-    //        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
-    //        permissions: "*"
-    //    }]
-    //},
+    adminAuth: {
+        type: "credentials",
+        users: [
+            {
+                username: "admin",
+                password: "$2b$08$abvFNU95g.A.tPGdJ/ASNOV3Pr0H7mkLCNJ2sQuG4JerDtU2/cTwK",
+                permissions: "*"
+            },
+            {
+                username: "redsensors",
+                password: "$2b$08$SCCHtnhwbd2xJhFzqezKKOyAbWEaeilqguBPcL4mOkJeq.iFcNZFa",
+                permissions: "read"
+            }
+        ]
+    },
 
     /** The following property can be used to enable HTTPS
      * This property can be either an object, containing both a (private) key
@@ -254,6 +261,69 @@ module.exports = {
             metrics: false,
             /** Whether or not to include audit events in the log output */
             audit: false
+        },
+        winston: {
+            level: "info",
+            metrics: false,
+            audit: false,
+            handler: function (conf) {
+
+                const winston = require('winston');
+                const DailyRotateFile = require("winston-daily-rotate-file");
+
+                const logger = winston.createLogger({
+                    format: winston.format.printf(info => `${new Date(parseInt(info.timestamp)).toISOString()} - ${info.message}`),
+                    transports: [
+                        new DailyRotateFile({
+                            filename: 'servidor-local-%DATE%.log',
+                            datePattern: 'YYYY-MM-DD-HH',
+                            dirname: "./logs",
+                            maxSize: "100m"
+                        })
+                    ]
+                });
+
+                var levelNames = {
+                    10: "fatal",
+                    20: "error",
+                    30: "warn",
+                    40: "info",
+                    50: "debug",
+                    60: "trace",
+                    98: "audit",
+                    99: "metric"
+                };
+
+                var consoleLogger = function (msg) {
+                    if (msg.level == "metric" || msg.level == "audit") {
+                        return ("[" + levelNames[msg.level] + "] " + JSON.stringify(msg));
+                    } else {
+                        if (msg.msg && msg.msg.stack) {
+                            return ("[" + levelNames[msg.level] + "] " + (msg.type ? "[" + msg.type + ":" + (msg.name || msg.id) + "] " : "") + msg.msg.stack);
+                        } else {
+                            var message = msg.msg;
+                            try {
+                                if (typeof message === 'object' && message !== null && message.toString() === '[object Object]' && message.message) {
+                                    message = message.message;
+                                }
+                            } catch (e) {
+                                message = 'Exception trying to log: ' + JSON.stringify(msg);
+                            }
+
+                            return ("[" + levelNames[msg.level] + "] " + (msg.type ? "[" + msg.type + ":" + (msg.name || msg.id) + "] " : "") + message);
+                        }
+                    }
+                }
+
+                return function (msg) {
+
+                    logger.log({
+                        level: levelNames[msg.level],
+                        message: consoleLogger(msg),
+                        timestamp: msg.timestamp
+                    })
+                }
+            }
         }
     },
 

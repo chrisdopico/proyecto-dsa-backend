@@ -41,7 +41,7 @@ module.exports = {
      * node-red from being able to decrypt your existing credentials and they will be
      * lost.
      */
-    //credentialSecret: "a-secret-key",
+    credentialSecret: false,
 
     /** By default, the flow JSON will be formatted over multiple lines making
      * it easier to compare changes when using version control.
@@ -73,14 +73,21 @@ module.exports = {
     /** To password protect the Node-RED editor and admin API, the following
      * property can be used. See http://nodered.org/docs/security.html for details.
      */
-    //adminAuth: {
-    //    type: "credentials",
-    //    users: [{
-    //        username: "admin",
-    //        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
-    //        permissions: "*"
-    //    }]
-    //},
+    adminAuth: {
+        type: "credentials",
+        users: [
+            {
+                username: "admin",
+                password: "$2b$08$abvFNU95g.A.tPGdJ/ASNOV3Pr0H7mkLCNJ2sQuG4JerDtU2/cTwK",
+                permissions: "*"
+            },
+            {
+                username: "redsensors",
+                password: "$2b$08$SCCHtnhwbd2xJhFzqezKKOyAbWEaeilqguBPcL4mOkJeq.iFcNZFa",
+                permissions: "read"
+            }
+        ]
+    },
 
     /** The following property can be used to enable HTTPS
      * This property can be either an object, containing both a (private) key
@@ -494,4 +501,34 @@ module.exports = {
     //    *   - reason: if result is false, the HTTP reason string to return
     //    */
     //},
+
+    /*******************************************************************************
+    * REDSensor Configuration
+    *  - Swagger
+    ******************************************************************************/
+
+    "swagger": {
+        "template": {
+            "swagger": "2.0",
+            "info": {
+                "version": "0.1.0",
+                "title": "Servicio Consulta API",
+                "description": "Servicio Consulta es un API de la empresa REDSensors, para operar y consultar datos de servidores locales.\n\nWeb:\n- [Sistema REDSensors](https://)\n\nGitHub:\n- [Backend](https://github.com/chrisdopico/proyecto-dsa-backend)\n- [Frontend Web](https://github.com/chrisdopico/proyecto-dsa-frontend)\n- [Frontend Móvil](https://github.com/chrisdopico/proyecto-dsa-mobile)",
+                "termsOfService": "http://swagger.io/terms/",
+                "contact": {
+                    "name": "Williams, Justin, Jorge, David, Christian",
+                    "email": "redsensors@swagger.io"
+                },
+                "license": {
+                    "name": "Apache 2.0",
+                    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+                }
+            },
+            "host": "localhost:9003",
+            "basePath": "/",
+            "schemes": [
+                "http"
+            ]
+        }
+    }
 }

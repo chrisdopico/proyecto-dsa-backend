@@ -7,6 +7,8 @@
         "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
     },
     "dependencies": {
-        "node-red": "2.2.2"
+        "node-red": "2.2.2",
+        "winston": "3.7.2",
+        "winston-daily-rotate-file": "4.7.1"
     }
 }
