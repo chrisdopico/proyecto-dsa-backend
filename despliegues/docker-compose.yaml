@@ -7,28 +7,27 @@ services:
   #  ports:
   #    - 9001:1880
 
-  #servicio-consulta:
-  #  image: servicio-consulta
-  #  networks: 
-  #    - localnet
-  #  environment:
-  #    - MONGO_URL=mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net
-  #    - MONGO_DB=servidor_central
-  #    - BROKER_SERVICE=wss://redsensors-servicio-mqtt-broker.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/broker
-  #    - TZ=Europe/Madrid
-  #  ports:
-  #  - 9003:1880
-
   #servicio-almacenamiento:
   #  image: servicio-almacenamiento
   #  networks: 
   #    - localnet
   #  environment:
-  #    - BROKER_SERVICE=wss://redsensors-servicio-mqtt-broker.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/broker
+  #    - BROKER_SERVICE=wss://servicio-broker/broker
   #    - MONGO_URL=mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net
   #    - MONGO_DB=servidor_central
   #  ports:
   #    - 9002:1880
+
+  #servicio-consulta:
+  #  image: servicio-consulta
+  #  networks: 
+  #   - localnet
+  #  environment:
+  #    - BROKER_SERVICE=wss://servicio-broker/broker
+  #    - MONGO_URL=mongodb+srv://nodered:QJiGBpRXyPuunSFR@cluster0.jz2vpna.mongodb.net
+  #    - MONGO_DB=servidor_central
+  #  ports:
+  #  - 9003:1880
 
   servidor-local-1:
     image: servidor-local
@@ -188,6 +187,54 @@ services:
       - NUM_SENS_INCENDIO=1
       - NUM_SENS_TEMPERATURA=1
       - NUM_SENS_PRESENCIA=1
+      - TZ=Europe/Madrid
+    depends_on:
+      - servicio-almacenamiento
+  
+  servidor-local-11:
+    image: servidor-local
+    networks: 
+      - localnet
+    environment:
+      - SERVER_ID=sl11
+      - LATITUD=39.87733637695147
+      - LONGITUD=3.0158341930483505
+      - BROKER_SERVICE=wss://redsensors-servicio-mqtt-broker.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/broker
+      - NUM_SENS_INCENDIO=1
+      - NUM_SENS_TEMPERATURA=1
+      - NUM_SENS_PRESENCIA=5
+      - TZ=Europe/Madrid
+    depends_on:
+      - servicio-almacenamiento
+    
+  servidor-local-12:
+    image: servidor-local
+    networks: 
+      - localnet
+    environment:
+      - SERVER_ID=sl12
+      - LATITUD=39.9614186099791
+      - LONGITUD=3.211907312685607
+      - BROKER_SERVICE=wss://redsensors-servicio-mqtt-broker.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/broker
+      - NUM_SENS_INCENDIO=1
+      - NUM_SENS_TEMPERATURA=1
+      - NUM_SENS_PRESENCIA=5
+      - TZ=Europe/Madrid
+    depends_on:
+      - servicio-almacenamiento
+  
+  servidor-local-13:
+    image: servidor-local
+    networks: 
+      - localnet
+    environment:
+      - SERVER_ID=sl13
+      - LATITUD=39.9614186099791
+      - LONGITUD=3.211907312685607
+      - BROKER_SERVICE=wss://redsensors-servicio-mqtt-broker.pj87j18q4um.eu-gb.codeengine.appdomain.cloud/broker
+      - NUM_SENS_INCENDIO=1
+      - NUM_SENS_TEMPERATURA=1
+      - NUM_SENS_PRESENCIA=5
       - TZ=Europe/Madrid
     depends_on:
       - servicio-almacenamiento
