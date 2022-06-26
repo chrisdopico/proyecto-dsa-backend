@@ -1,0 +1,235 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Servicio Consulta API
+  description: >-
+    Servicio Consulta es un API de la empresa REDSensors, para operar y
+    consultar datos de servidores locales.
+
+
+    Web:
+
+    - [Sistema REDSensors](https://)
+
+
+    GitHub:
+
+    - [Backend](https://github.com/chrisdopico/proyecto-dsa-backend)
+
+    - [Frontend Web](https://github.com/chrisdopico/proyecto-dsa-frontend)
+
+    - [Frontend Móvil](https://github.com/chrisdopico/proyecto-dsa-mobile)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Williams, Justin, Jorge, David, Christian
+    email: redsensors@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: localhost:9003
+basePath: /
+schemes:
+  - http
+paths:
+  /servidores-locales:
+    get:
+      summary: Servidores Locales
+      description: Devuelve el listado completo de servidores locales
+      tags:
+        - servidores-locales
+      consumes: []
+      produces:
+        - application/json
+      deprecated: false
+      parameters: []
+      responses:
+        '200':
+          description: 200 OK. Listado servidores locales
+          schema:
+            properties:
+              _id:
+                type: string
+                format: string
+              longitud:
+                type: number
+                format: double
+              latitud:
+                type: number
+                format: double
+              estado:
+                type: object
+        '404':
+          description: 404 Not Found. Recurso no encontrado
+          schema:
+            properties:
+              mensaje:
+                type: string
+                format: string
+        '500':
+          description: 500 Internal Server Error. Error genérico
+          schema:
+            properties:
+              mensaje:
+                type: string
+                format: string
+        default:
+          description: Error inesperado
+  /servidores-locales/{idServidorLocal}/sensores:
+    get:
+      summary: Servidores Locales por ID
+      description: Devuelve información de los sensores de un determinado servidor local
+      tags:
+        - servidores-locales
+      consumes: []
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: idServidorLocal
+          in: path
+          description: ID del servidor local
+          required: true
+          type: string
+          format: string
+      responses:
+        '200':
+          description: 200 OK. Listado de sensores por ID de servidor local
+          schema:
+            properties:
+              _id:
+                type: string
+                format: string
+              longitud:
+                type: number
+                format: double
+              latitud:
+                type: number
+                format: double
+              sensores:
+                type: object
+        '404':
+          description: 404 Not Found. Recurso no encontrado
+          schema:
+            properties:
+              mensaje:
+                type: string
+                format: string
+        '500':
+          description: 500 Internal Server Error. Error genérico
+          schema:
+            properties:
+              mensaje:
+                type: string
+                format: string
+        default:
+          description: Error inesperado
+  /token:
+    post:
+      summary: Autenticación con token
+      description: Devuelve un token de autenticación si las credenciales son correctas
+      tags:
+        - autenticación
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: credenciales
+          in: body
+          description: Credenciales usuario/contraseña
+          required: true
+          schema:
+            type: object
+            properties:
+              usuario:
+                type: string
+                format: string
+              contraseña:
+                type: string
+                format: string
+      responses:
+        '200':
+          description: 200 OK. Autenticación válida
+          schema:
+            properties:
+              token:
+                type: string
+                format: string
+              expires_in:
+                type: number
+                format: int32
+        '401':
+          description: 401 Unauthorized. Credenciales incorrectas
+          schema:
+            properties:
+              mensaje:
+                type: string
+                format: string
+        default:
+          description: Error inesperado
+  /servidores-locales/{idServidorLocal}/interrumpir:
+    post:
+      summary: Activar/Desactivar servidor local
+      description: >-
+        Activar/Desactivar un determinado servidor local. Funcionalidad
+        Interrumpir
+      tags:
+        - activar-desactivar
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      deprecated: false
+      parameters:
+        - name: idServidorLocal
+          in: path
+          description: ID del servidor local
+          required: true
+          type: string
+          format: string
+        - name: interrumpir
+          in: body
+          description: Flag de interrupción true/false
+          required: true
+          schema:
+            type: object
+            properties:
+              interrumpir:
+                type: boolean
+        - name: Authorization
+          in: header
+          description: Bearer token de autorización
+          required: true
+          type: string
+          format: string
+      responses:
+        '200':
+          description: 200 OK. Servidor Activado/Desactivado correctamente
+          schema:
+            properties:
+              interrumpir:
+                type: boolean
+        '401':
+          description: 401 Unauthorized. Token inválido
+          schema:
+            properties:
+              mensaje:
+                type: string
+                format: string
+        '404':
+          description: 404 Not Found. Servidor no encontrado
+          schema:
+            properties:
+              mensaje:
+                type: string
+                format: string
+        '500':
+          description: 500 Internal Server Error. Error genérico
+          schema:
+            properties:
+              mensaje:
+                type: string
+                format: string
+        default:
+          description: Error inesperado

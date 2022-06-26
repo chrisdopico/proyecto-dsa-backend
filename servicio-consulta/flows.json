@@ -51,6 +51,345 @@
         "sessionExpiry": ""
     },
     {
+        "id": "ac72a6a562f61c0e",
+        "type": "swagger-doc",
+        "summary": "Servidores Locales",
+        "description": "Devuelve el listado completo de servidores locales",
+        "tags": "servidores-locales",
+        "consumes": "",
+        "produces": "application/json",
+        "parameters": [],
+        "responses": {
+            "200": {
+                "description": "200 OK. Listado servidores locales",
+                "schema": {
+                    "properties": {
+                        "_id": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "_id",
+                            "propertyRow": true
+                        },
+                        "longitud": {
+                            "type": "number",
+                            "format": "double",
+                            "name": "longitud",
+                            "propertyRow": true
+                        },
+                        "latitud": {
+                            "type": "number",
+                            "format": "double",
+                            "name": "latitud",
+                            "propertyRow": true
+                        },
+                        "estado": {
+                            "name": "estado",
+                            "propertyRow": true
+                        }
+                    }
+                },
+                "code": "200"
+            },
+            "404": {
+                "description": "404 Not Found. Recurso no encontrado",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "mensaje",
+                            "propertyRow": true
+                        }
+                    }
+                },
+                "code": "404"
+            },
+            "500": {
+                "description": "500 Internal Server Error. Error genérico",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "mensaje",
+                            "propertyRow": true
+                        }
+                    }
+                },
+                "code": "500"
+            },
+            "default": {
+                "description": "Error inesperado",
+                "code": "default"
+            }
+        },
+        "deprecated": false
+    },
+    {
+        "id": "bade85e7d85ca541",
+        "type": "swagger-doc",
+        "summary": "Servidores Locales por ID",
+        "description": "Devuelve información de los sensores de un determinado servidor local",
+        "tags": "servidores-locales",
+        "consumes": "",
+        "produces": "application/json",
+        "parameters": [
+            {
+                "name": "idServidorLocal",
+                "in": "path",
+                "description": "ID del servidor local",
+                "required": true,
+                "type": "string",
+                "format": "string"
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "200 OK. Listado de sensores por ID de servidor local",
+                "schema": {
+                    "properties": {
+                        "_id": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "_id",
+                            "propertyRow": true
+                        },
+                        "longitud": {
+                            "type": "number",
+                            "format": "double",
+                            "name": "longitud",
+                            "propertyRow": true
+                        },
+                        "latitud": {
+                            "type": "number",
+                            "format": "double",
+                            "name": "latitud",
+                            "propertyRow": true
+                        },
+                        "sensores": {
+                            "name": "sensores",
+                            "propertyRow": true
+                        }
+                    }
+                },
+                "code": "200"
+            },
+            "404": {
+                "description": "404 Not Found. Recurso no encontrado",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "mensaje",
+                            "propertyRow": true
+                        }
+                    }
+                },
+                "code": "404"
+            },
+            "500": {
+                "description": "500 Internal Server Error. Error genérico",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "mensaje",
+                            "propertyRow": true
+                        }
+                    }
+                },
+                "code": "500"
+            },
+            "default": {
+                "description": "Error inesperado",
+                "code": "default"
+            }
+        },
+        "deprecated": false
+    },
+    {
+        "id": "70fad81bdc6ea3f9",
+        "type": "swagger-doc",
+        "summary": "Autenticación con token",
+        "description": "Devuelve un token de autenticación si las credenciales son correctas",
+        "tags": "autenticación",
+        "consumes": "application/json",
+        "produces": "application/json",
+        "parameters": [
+            {
+                "name": "credenciales",
+                "in": "body",
+                "description": "Credenciales usuario/contraseña",
+                "required": true,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "usuario": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "usuario",
+                            "propertyRow": true
+                        },
+                        "contraseña": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "contraseña",
+                            "propertyRow": true
+                        }
+                    }
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "200 OK. Autenticación válida",
+                "schema": {
+                    "properties": {
+                        "token": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "token",
+                            "propertyRow": true
+                        },
+                        "expires_in": {
+                            "type": "number",
+                            "format": "int32",
+                            "name": "expires_in",
+                            "propertyRow": true
+                        }
+                    }
+                },
+                "code": "200"
+            },
+            "401": {
+                "description": "401 Unauthorized. Credenciales incorrectas",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string",
+                            "name": "mensaje",
+                            "propertyRow": true
+                        }
+                    }
+                },
+                "code": "401"
+            },
+            "500": {
+                "description": "500 Internal Server Error. Error genérico",
+                "code": "500"
+            },
+            "default": {
+                "description": "Error inesperado",
+                "code": "default"
+            }
+        },
+        "deprecated": false
+    },
+    {
+        "id": "63642fe65b1fd0af",
+        "type": "swagger-doc",
+        "summary": "Activar/Desactivar servidor local",
+        "description": "Activar/Desactivar un determinado servidor local. Funcionalidad Interrumpir",
+        "tags": "activar-desactivar",
+        "consumes": "application/json",
+        "produces": "application/json",
+        "parameters": [
+            {
+                "name": "idServidorLocal",
+                "in": "path",
+                "description": "ID del servidor local",
+                "required": true,
+                "type": "string",
+                "format": "string"
+            },
+            {
+                "name": "interrumpir",
+                "in": "body",
+                "description": "Flag de interrupción true/false",
+                "required": true,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "interrumpir": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "Authorization",
+                "in": "header",
+                "description": "Bearer token de autorización",
+                "required": true,
+                "type": "string",
+                "format": "string"
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "200 OK. Servidor Activado/Desactivado correctamente",
+                "schema": {
+                    "properties": {
+                        "interrumpir": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "400 Bad Request. Error en la petición o en el servidor local especificado",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "401 Unauthorized. Token inválido",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "404 Not Found. Servidor no encontrado",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "500 Internal Server Error. Error genérico",
+                "schema": {
+                    "properties": {
+                        "mensaje": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                }
+            },
+            "default": {
+                "description": "Error inesperado"
+            }
+        },
+        "deprecated": false
+    },
+    {
         "id": "6307206ff6aca97e",
         "type": "http in",
         "z": "5c6c220009097d76",
@@ -58,7 +397,7 @@
         "url": "/servidores-locales",
         "method": "get",
         "upload": false,
-        "swaggerDoc": "",
+        "swaggerDoc": "ac72a6a562f61c0e",
         "x": 140,
         "y": 100,
         "wires": [
@@ -122,7 +461,7 @@
         "url": "/servidores-locales/:idServidorLocal/sensores",
         "method": "get",
         "upload": false,
-        "swaggerDoc": "",
+        "swaggerDoc": "bade85e7d85ca541",
         "x": 230,
         "y": 200,
         "wires": [
@@ -253,7 +592,7 @@
         "url": "/token",
         "method": "post",
         "upload": false,
-        "swaggerDoc": "",
+        "swaggerDoc": "70fad81bdc6ea3f9",
         "x": 110,
         "y": 320,
         "wires": [
@@ -501,7 +840,7 @@
         "url": "/servidores-locales/:idServidorLocal/interrumpir",
         "method": "post",
         "upload": false,
-        "swaggerDoc": "",
+        "swaggerDoc": "63642fe65b1fd0af",
         "x": 230,
         "y": 420,
         "wires": [

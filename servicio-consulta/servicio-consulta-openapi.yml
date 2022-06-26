@@ -1,0 +1,523 @@
+openapi: 3.0.3
+info:
+  version: '0.1.0'
+  title: 'Servicio Consulta API'
+  description: |-
+    Servicio Consulta es un API de la empresa REDSensors, para operar y consultar datos de servidores locales.
+    
+    Web:
+    - [Sistema REDSensors](https://proyecto-dsa-frontend-giodimagio.vercel.app)
+    
+    GitHub:
+    - [Backend](https://github.com/chrisdopico/proyecto-dsa-backend)
+    - [Frontend Web](https://github.com/chrisdopico/proyecto-dsa-frontend)
+    - [Frontend Móvil](https://github.com/chrisdopico/proyecto-dsa-mobile)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Williams, Justin, Jorge, David, Christian
+    email: redsensors@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: 'http://localhost:9003'
+    description: 'Desarrollo'
+  - url: 'https://redsensors-servicio-consulta.pj87j18q4um.eu-gb.codeengine.appdomain.cloud'
+    description: 'Produccion'
+tags:
+  - name: servidores-locales
+    description: 'Operaciones relativas a servidores locales'
+    externalDocs:
+      description: '+info'
+      url: https://github.com/chrisdopico/proyecto-dsa-backend
+  - name: autenticacion
+    description: 'Autenticación'
+    externalDocs:
+      description: '+info'
+      url: https://github.com/chrisdopico/proyecto-dsa-backend
+  - name: activar-desactivar
+    description: 'Activación/Desactivación (interrupción) de servidores locales'
+    externalDocs:
+      description: '+info'
+      url: https://github.com/chrisdopico/proyecto-dsa-backend
+paths:
+  /servidores-locales:
+    get:
+      tags:
+        - servidores-locales
+      summary: 'Servidores Locales'
+      description: 'Devuelve el listado completo de servidores locales'
+      operationId: getServidoresLocales
+      deprecated: false
+      parameters: []
+      responses:
+        '200':
+          description: '200 OK. Listado servidores locales'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/servidores-locales-response-schema'
+              examples:
+                200-servidores-locales-response-example-1:
+                  $ref: '#/components/examples/200-servidores-locales-response-example-1'
+                200-servidores-locales-response-example-2:
+                  $ref: '#/components/examples/200-servidores-locales-response-example-2'
+        '404':
+          description: '404 Not Found. Recurso no encontrado'
+        '500':
+          description: '500 Internal Server Error. Error genérico'
+        default:
+          description: 'Error inesperado'
+  /servidores-locales/{idServidorLocal}/sensores:
+    get:
+      tags:
+        - servidores-locales
+      summary: 'Servidores Locales por ID'
+      description: 'Devuelve información de los sensores de un determinado servidor local'
+      operationId: getServidoresLocalesPorId
+      deprecated: false
+      parameters:
+        - name: idServidorLocal
+          in: path
+          description: 'ID del servidor local'
+          required: true
+          schema:
+            type: string
+            items:
+              type: string
+              format: string
+          examples:
+            servidor-local-id-path-example-1:
+              $ref: '#/components/examples/servidor-local-id-path-example-1'
+            servidor-local-id-example-2:
+              $ref: '#/components/examples/servidor-local-id-path-example-2'
+        
+      responses:
+        '200':
+          description: '200 OK. Listado de sensores por ID de servidor local'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/servidor-local-id-response-schema'
+              examples:
+                200-servidor-local-id-response-example-1:
+                  $ref: '#/components/examples/200-servidor-local-id-response-example-1'
+        '404':
+          description: '404 Not Found. Recurso no encontrado'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-schema'
+              examples:
+                404-servidores-locales-id-response-example-1:
+                  $ref: '#/components/examples/404-servidores-locales-id-response-example-1'
+        '500':
+          description: '500 Internal Server Error. Error genérico'
+        default:
+          description: 'Error inesperado'
+  /token:
+    post:
+      tags:
+        - autenticacion
+      summary: 'Autenticación con token'
+      description: 'Devuelve un token de autenticación si las credenciales son correctas'
+      operationId: postToken
+      deprecated: false
+      requestBody:
+          description: 'Credenciales usuario/contraseña'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token-body-schema'
+              examples:
+                token-body-example:
+                  $ref: '#/components/examples/token-body-example-1'
+                token-body-example-2:
+                  $ref: '#/components/examples/token-body-example-2'
+      responses:
+        '200':
+          description: '200 OK. Autenticación válida'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token-response-schema'
+              examples:
+                token-response-example-1:
+                  $ref: '#/components/examples/200-token-response-example-1'
+        '401':
+          description: '401 Unauthorized. Credenciales incorrectas'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-schema'
+              examples:
+                401-token-response-example-1:
+                  $ref: '#/components/examples/401-token-response-example-1'
+        '500':
+          description: '500 Internal Server Error. Error genérico'
+        default:
+          description: 'Error inesperado'
+  /servidores-locales/{idServidorLocal}/interrumpir:
+    post:
+      tags:
+        - activar-desactivar
+      summary: 'Activar/Desactivar servidor local'
+      description: |-
+        Activar/Desactivar un determinado servidor local. Funcionalidad
+        Interrumpir
+      operationId: getServidoresLocalesInterrumpir
+      deprecated: false
+      security: 
+        - autenticacion: []
+      parameters:
+        - name: idServidorLocal
+          in: path
+          description: 'ID del servidor local'
+          required: true
+          schema:
+            type: string
+            items:
+              type: string
+              format: string
+          examples:
+            servidor-local-id-path-example-1:
+              $ref: '#/components/examples/servidor-local-id-path-example-1'
+            servidor-local-id-example-2:
+              $ref: '#/components/examples/servidor-local-id-path-example-2'
+      requestBody:
+          description: 'Flag de interrupción true/false'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/interrumpir-body-schema'
+              examples:
+                interrumpir-body-example-1:
+                  $ref: '#/components/examples/interrumpir-body-example-1'
+                interrumpir-body-example-2:
+                  $ref: '#/components/examples/interrumpir-body-example-2'
+      responses:
+        '200':
+          description: '200 OK. Listado de sensores por ID de servidor local'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/interrumpir-response-schema'
+              examples:
+                200-interrumpir-response-example-1:
+                  $ref: '#/components/examples/200-interrumpir-response-example-1'
+                200-interrumpir-response-example-2:
+                  $ref: '#/components/examples/200-interrumpir-response-example-2'
+        '400':
+          description: '400 Bad Request. Petición mal formada'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-schema'
+              examples:
+                400-interrumpir-response-example-1:
+                  $ref: '#/components/examples/400-interrumpir-response-example-1'
+                400-interrumpir-response-example-2:
+                  $ref: '#/components/examples/400-interrumpir-response-example-2'
+                400-interrumpir-response-example-3:
+                  $ref: '#/components/examples/400-interrumpir-response-example-3'
+                400-interrumpir-response-example-4:
+                  $ref: '#/components/examples/400-interrumpir-response-example-4'
+                400-interrumpir-response-example-5:
+                  $ref: '#/components/examples/400-interrumpir-response-example-5'
+        '401':
+          description: '401 Unauthorized. Token inválido'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-schema'
+              examples:
+                401-interrumpir-response-example-1:
+                  $ref: '#/components/examples/401-interrumpir-response-example-1'
+        '404':
+          description: '404 Not Found. Servidor no encontrado'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-schema'
+              examples:
+                404-interrumpir-response-example-1:
+                  $ref: '#/components/examples/404-interrumpir-response-example-1'
+        '500':
+          description: '500 Internal Server Error. Error genérico'
+        default:
+          description: 'Error inesperado'
+components:
+  examples:
+    servidor-local-id-path-example-1:
+      summary: 'Ejemplo 1 - ID servidor válido (está registrado)'
+      value: 'sl1'
+    servidor-local-id-path-example-2:
+      summary: 'Ejemplo 2 - ID servidor incorrecto (no está registrado o no existe)'
+      value: 'sl999'
+    token-body-example-1:
+      summary: 'Ejemplo 1 - Credenciales válidas'
+      value:
+        usuario: 'admin-0'
+        contraseña: 'admin-0'
+    token-body-example-2:
+      summary: 'Ejemplo 2 - Credenciales inválidas'
+      value:
+        usuario: 'admin-0'
+        contraseña: 'contraseña_incorrecta'
+    interrumpir-body-example-1:
+      summary: 'Ejemplo 1 - Activar servidor local (flag "true")'
+      value:
+        interrumpir: true
+    interrumpir-body-example-2:
+      summary: 'Ejemplo 2 - Desactivar (interrumpir) servidor local (flag "false")'
+      value:
+        interrumpir: false
+    200-interrumpir-response-example-1:
+      summary: 'Ejemplo 1 - 200 OK - Servidor local interrumpido'
+      value:
+        mensaje: 'Servidor local interrumpido'
+    200-interrumpir-response-example-2:
+      summary: 'Ejemplo 2 - 200 OK - Servidor local trabajano'
+      value:
+        mensaje: 'Servidor local trabajando'    
+    200-token-response-example-1:
+      summary: 'Ejemplo 1 - 200 OK - Token y expiración'
+      value:
+        token: '89ee95f9-0023-4713-a1ec-1e49d4a3639c'
+        expires_in: 600
+    200-servidores-locales-response-example-1:
+      summary: 'Ejemplo 1 - 200 OK - Devuelve 1 servidor local'
+      value:
+      -   _id: sl1
+          longitud: 3.3505785175614635
+          latitud: 40.5132234326853
+          estado:
+            timestamp: '2022-06-18T16:45:25.063Z'
+            estado: trabajando
+    200-servidores-locales-response-example-2:
+      summary: 'Ejemplo 2 - 200 OK - Devuelve 2 servidores locales'
+      value:
+      - _id: sl1
+        longitud: 3.3505785175614635
+        latitud: 40.5132234326853
+        estado:
+          timestamp: '2022-06-18T16:45:25.063Z'
+          estado: trabajando
+      - _id: sl2
+        longitud: -3.3505785175614635
+        latitud: 40.5132234326853
+        estado:
+          timestamp: '2022-06-18T16:42:44.520Z'
+          estado: presencia
+    200-servidor-local-id-response-example-1:
+      summary: 'Ejemplo 1 - 200 OK - Devuelve sensores por servidor local'
+      value:
+        _id: sl1
+        longitud: -3.3505785175614635
+        latitud: 40.5132234326853
+        estado:
+          timestamp: '2022-06-19T01:19:55.306Z'
+          estado: presencia
+        sensores:
+          - _id: sl1_incendio_0
+            type: incendio
+            lectura:
+              timestamp: '2022-06-19T00:46:55.293Z'
+              valor: 1
+          - _id: sl1_presencia_0
+            type: presencia
+            lectura:
+              timestamp: '2022-06-19T01:19:55.306Z'
+              valor: 1
+          - _id: sl1_temperatura_0
+            type: temperatura
+            lectura:
+              timestamp: '2022-06-19T01:21:29.900Z'
+              valor: 27.091046709277578
+          - _id: sl1_presencia_2
+            type: presencia
+            lectura:
+              timestamp: '2022-06-19T01:07:55.302Z'
+              valor: 1
+          - _id: sl1_presencia_1
+            type: presencia
+            lectura:
+              timestamp: '2022-06-19T00:10:55.266Z'
+              valor: 1
+    400-interrumpir-response-example-1:
+      summary: 'Ejemplo 1 - 400 Bad Request - Error'
+      value:
+        mensaje: 'Error, el cuerpo de la peticion no tiene la propiedad "interrumpido", o es de tipo incorrecto (boolean)'
+    400-interrumpir-response-example-2:
+      summary: 'Ejemplo 2 - 400 Bad Request - Error'
+      value:
+        mensaje: 'El servidor local especificado se encuentra desconectado'
+    400-interrumpir-response-example-3:
+      summary: 'Ejemplo 3 - 400 Bad Reques - Errort'
+      value:
+        mensaje: 'El servidor local especificado ya se encuentra en estado trabajando'
+    400-interrumpir-response-example-4:
+      summary: 'Ejemplo 5 - 400 Bad Request - Error'
+      value:
+        mensaje: 'El servidor local especificado no puede pasar a estado trabajando si se encuentra en estado de presencia'
+    400-interrumpir-response-example-5:
+      summary: 'Ejemplo 6 - 400 Bad Request - Error'
+      value:
+        mensaje: 'El servidor local especificado no puede pasar a estado trabajando si se encuentra en estado de incendio'
+    401-token-response-example-1:
+      summary: 'Ejemplo 1 - 401 Unauthorized - Error'
+      value:
+        mensaje: 'Las credenciales introducidas no pertenecen a ningun usuario'
+    401-interrumpir-response-example-1:
+      summary: 'Ejemplo 1 - 401 Unauthorized - Error'
+      value:
+        mensaje: 'Token invalido o caducado'
+    404-servidores-locales-id-response-example-1:
+      summary: 'Ejemplo 1 - 404 Not Found - Error'
+      value:
+        mensaje: 'El servidor local especificado no existe'
+    404-interrumpir-response-example-1:
+      summary: 'Ejemplo 1 - 404 Not Found - Error'
+      value:
+        mensaje: 'El servidor local especificado no existe'
+  schemas:
+    token-response-schema:
+      type: object
+      required:
+        - token
+        - expires_in
+      properties:
+        token:
+          type: string
+          format: string
+        expires_in:
+          type: number
+          format: int32
+    token-body-schema:
+      type: object
+      required:
+        - usuario
+        - contraseña
+      properties:
+        usuario:
+          type: string
+          format: string
+        contraseña:
+          type: string
+          format: string
+    interrumpir-response-schema:
+      type: object
+      required:
+        - mensaje
+      properties:
+        mensaje:
+          type: string
+          format: string
+    interrumpir-body-schema:
+      type: object
+      required:
+        - interrumpir
+      properties:
+        interrumpir:
+          type: boolean
+    servidores-locales-response-schema:
+      type: array
+      items:
+        type: object
+        required:
+          - _id
+          - longitud
+          - latitud
+          - estado
+        properties:
+          _id:
+            type: string
+            format: string
+          longitud:
+            type: number
+            format: double
+          latitud:
+            type: number
+            format: double
+          estado:
+            type: object
+            required:
+              - timestamp
+              - estado
+            properties:
+              timestamp:
+                type: string
+                format: date-time
+              estado:
+                type: string
+                format: string
+    servidor-local-id-response-schema:
+      type: object
+      required:
+        - _id
+        - longitud
+        - latitud
+        - estado
+        - sensores
+      properties:
+        _id:
+          type: string
+          format: string
+        longitud:
+          type: number
+          format: double
+        latitud:
+          type: number
+          format: double
+        estado:
+          type: object
+          required:
+            - timestamp
+            - estado
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            estado:
+              type: string
+              format: string
+        sensores:
+          type: array
+          items:
+            type: object
+            required:
+              - _id
+              - type
+              - lectura
+            properties:
+              _id:
+                type: string
+                format: string
+              type:
+                type: string
+                format: string
+              lectura:
+                type: object
+                required:
+                  - timestamp
+                  - valor
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  valor:
+                    type: number
+                    format: double
+    error-response-schema:
+      type: object
+      required:
+        - mensaje
+      properties:
+        mensaje:
+          type: string
+          format: string
+  securitySchemes:
+    autenticacion:
+      type: http
+      description: 'Autorización mediante token en el header "Authorization"'
+      scheme: Bearer
